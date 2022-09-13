@@ -158,11 +158,12 @@ MonoBehaviour:
   type: 0
   attackSpeed: 1
   radius: 0.1
+  speed: 2
   health: 150
   damage: 20
-  speed: 2
   maxHealth: 150
   price: 80
+  unlockExp: 2500
   team: 1
   isLeft: 0
 --- !u!61 &3734761666797146025

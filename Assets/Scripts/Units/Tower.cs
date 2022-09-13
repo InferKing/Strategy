@@ -7,7 +7,7 @@ public class Tower : MonoBehaviour
     public GameObject healthBar;
     public int health, maxHealth;
     [Range(1, 2)] public int team;
-    [SerializeField] private int repairCount;
+    [SerializeField] private int repairCount, limitUnit;
     [SerializeField] private float turretDamage, turretSpeed, turretRadius;
     [SerializeField] private GameObject _spawner;
     [SerializeField] private int[] _priceForTower;
@@ -37,6 +37,7 @@ public class Tower : MonoBehaviour
     public void AddToQueue(Unit unit)
     {
         units.Add(unit);
+        MainController.currentUnits += 1;
     }
     public void RemoveUnit()
     {
@@ -45,17 +46,24 @@ public class Tower : MonoBehaviour
             units.RemoveAt(0);
         }
     }
-    public void SpawnUnit()
+    public bool TrySpawnUnit()
     {
-        Debug.Log("Here");
-        GameObject unit = Instantiate(units[0].gameObject);
-        unit.transform.position = GetSpawnerPos();
-        RemoveUnit();
+        if (MainController.currentUnits - units.Count < limitUnit)
+        {
+            GameObject unit = Instantiate(units[0].gameObject);
+            unit.transform.position = GetSpawnerPos();
+            RemoveUnit();
+            TextController.updatePlayerUI?.Invoke();
+            return true;
+        }
+        return false;
+        
     }
     public float GetTurretDamage() => turretDamage;
     public float GetTurretSpeed() => turretSpeed;
     public float GetTurretRadius() => turretRadius;
     public int GetRepairSpeed() => repairCount;
+    public int GetLimitUnit() => limitUnit;
     public Vector3 GetSpawnerPos() => _spawner.transform.position;
     public List<Unit> GetQueue() => units;
     public int[] GetTowerPrices() => _priceForTower;

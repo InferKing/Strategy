@@ -7,7 +7,7 @@ public class BlockSprite : MonoBehaviour
     [SerializeField] private Button _button;
     [SerializeField] private Image _image;
     [SerializeField] private Sprite _sprite;
-    [SerializeField] private int _exp;
+    [SerializeField] private Unit _unit;
     private bool _flag = false;
     private void Update()
     {
@@ -15,7 +15,7 @@ public class BlockSprite : MonoBehaviour
     }
     private void CheckAndSetSprite()
     {
-        if (Singleton.Instance.Player.GetExp() >= _exp && !_flag)
+        if (Singleton.Instance.Player.GetExp() >= _unit.unlockExp && !_flag)
         {
             _flag = true;
             _button.interactable = _flag;

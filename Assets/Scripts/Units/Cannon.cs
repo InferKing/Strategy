@@ -46,11 +46,17 @@ public class Cannon : MonoBehaviour
             TextController.showUnitUI?.Invoke(_unit.gameObject, _damage);
             if (_unit.health == 0)
             {
+                if (_unit.team == 1 && !_unit.isDead)
+                {
+                    MainController.currentUnits -= 1;
+                    TextController.updatePlayerUI?.Invoke();
+                }
                 if (_unit.team != _myTower.team && !_unit.isDead)
                 {
                     _unit.isDead = true;
-                    Singleton.Instance.Player.TryMoneyTransaction(_unit.price);
+                    Singleton.Instance.Player.TryMoneyTransaction(_unit.price/2);
                     Singleton.Instance.Player.AddExperience(_unit.price);
+                    Singleton.Instance.Player.AddReputation(_unit.price/100+1);
                 }
                 TextController.updatePlayerUI?.Invoke();
                 _unit.status = UnitStatus.Death;

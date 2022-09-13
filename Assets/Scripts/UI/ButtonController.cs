@@ -25,8 +25,8 @@ public class ButtonController : MonoBehaviour
     {
         if (Singleton.Instance.Player.TryMoneyTransaction(-_units[index].GetComponent<Unit>().price))
         {
-            TextController.updatePlayerUI?.Invoke();
             _tower.AddToQueue(_units[index].GetComponent<Unit>());
+            TextController.updatePlayerUI?.Invoke();
         }
     }
     public void SetTower(int index)

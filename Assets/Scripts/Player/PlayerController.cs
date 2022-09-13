@@ -21,10 +21,13 @@ public class PlayerController : MonoBehaviour
             int index = GetButtonIndex();
             if (index > 0 && index <= _units.Length)
             {
-                if (Singleton.Instance.Player.TryMoneyTransaction(-_units[index - 1].price))
+                if (Singleton.Instance.Player.GetExp() >= _units[index-1].unlockExp)
                 {
-                    TextController.updatePlayerUI?.Invoke();
-                    _tower.AddToQueue(_units[index - 1]);
+                    if (Singleton.Instance.Player.TryMoneyTransaction(-_units[index - 1].price))
+                    {
+                        _tower.AddToQueue(_units[index - 1]);
+                        TextController.updatePlayerUI?.Invoke();
+                    }
                 }
             }
         }

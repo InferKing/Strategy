@@ -27,7 +27,7 @@ public class Unit : MonoBehaviour
     public UnitStatus status;
     public UnitType type;
     public float attackSpeed, radius, speed;
-    public int health, damage, maxHealth, price; // team should be 1 or 2
+    public int health, damage, maxHealth, price, unlockExp; // team should be 1 or 2
     [Range(1, 2)] public int team;
     public bool isLeft;
 
@@ -88,6 +88,12 @@ public class Unit : MonoBehaviour
                 Singleton.Instance.Player.TryMoneyTransaction(unit.price);
                 Singleton.Instance.Player.AddExperience(unit.price * 2);
                 Singleton.Instance.Player.AddReputation((unit.price / 100)+1);
+            }
+            else if (unit.team == 1 && !unit.isDead)
+            {
+                unit.isDead = true;
+                MainController.currentUnits -= 1;
+                TextController.updatePlayerUI?.Invoke();
             }
             TextController.updatePlayerUI?.Invoke();
             unit.status = UnitStatus.Death;
