@@ -48,7 +48,7 @@ public class Tower : MonoBehaviour
     }
     public bool TrySpawnUnit()
     {
-        if (MainController.currentUnits - units.Count < limitUnit)
+        if (MainController.currentUnits - units.Count < limitUnit && CheckSpawnPos())
         {
             GameObject unit = Instantiate(units[0].gameObject);
             unit.transform.position = GetSpawnerPos();
@@ -58,6 +58,22 @@ public class Tower : MonoBehaviour
         }
         return false;
         
+    }
+    private bool CheckSpawnPos()
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(_spawner.transform.position, transform.right, 0.6f);
+        foreach(var hit in hits)
+        {
+            Unit unit;
+            if (hit.collider.gameObject.TryGetComponent<Unit>(out unit))
+            {
+                if (unit.type is UnitType.Melee)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     public float GetTurretDamage() => turretDamage;
     public float GetTurretSpeed() => turretSpeed;
