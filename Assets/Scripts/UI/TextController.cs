@@ -8,6 +8,7 @@ public class TextController : MonoBehaviour
 {
     [SerializeField] private TMP_Text _money, _rep, _exp;
     [SerializeField] private TMP_Text[] _texts;
+    [SerializeField] private TMP_Text _textUser;
     public static Action<GameObject, int> showUnitUI;
     public static Action updatePlayerUI;
     private void OnEnable()

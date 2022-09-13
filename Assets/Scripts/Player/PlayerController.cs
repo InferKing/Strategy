@@ -12,12 +12,41 @@ public enum Difficult
 
 public class PlayerController : MonoBehaviour
 {
-    
+    [SerializeField] private Tower _tower;
+    [SerializeField] private Unit[] _units;
+    private void Update()
+    {
+        if (Singleton.Instance.Player.IsAlive() && Input.anyKeyDown)
+        {
+            int index = GetButtonIndex();
+            if (index > 0 && index <= _units.Length)
+            {
+                if (Singleton.Instance.Player.TryMoneyTransaction(-_units[index - 1].price))
+                {
+                    TextController.updatePlayerUI?.Invoke();
+                    _tower.AddToQueue(_units[index - 1]);
+                }
+            }
+        }
+    }
+    private int GetButtonIndex()
+    {
+        try
+        {
+            int index = int.Parse(Input.inputString);
+            return index;
+        }
+        catch
+        {
+            return -1;
+        }
+    }
 }
 
 public class Player
 {
     private int money, reputation, experience, towerHealth;
+    private bool _flag;
     public Player(int money, int reputation, int experience)
     {
         this.money = money;

@@ -26,21 +26,10 @@ public class Unit : MonoBehaviour
     public GameObject healthBar;
     public UnitStatus status;
     public UnitType type;
-    public float attackSpeed, radius;
-    public int health, damage, speed, maxHealth, price; // team should be 1 or 2
+    public float attackSpeed, radius, speed;
+    public int health, damage, maxHealth, price; // team should be 1 or 2
     [Range(1, 2)] public int team;
     public bool isLeft;
-
-
-    //public Unit(int health, int damage, int speed, int team, bool isLeft)
-    //{
-    //    this.health = health;
-    //    this.maxHealth = health;
-    //    this.damage = damage;
-    //    this.speed = speed;
-    //    this.team = team;
-    //    this.isLeft = isLeft;
-    //}
 
     private void Start()
     {
@@ -113,7 +102,6 @@ public class Unit : MonoBehaviour
         unit.health -= _damage;
         unit.health = Mathf.Clamp(unit.health, 0, unit.maxHealth);
         unit.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)unit.health / unit.maxHealth, 0, 1), unit.healthBar.transform.localScale.y, 1);
-        // TextController.showUnitUI?.Invoke(unit.gameObject, _damage);
         if (unit.health == 0)
         {
             status = UnitStatus.Move;
@@ -196,60 +184,4 @@ public class Unit : MonoBehaviour
         StopCoroutine(Life());
         gameObject.SetActive(false);
     }
-
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.collider.tag == "Front")
-    //    {
-    //        _enemy = collision.collider.GetComponent<Unit>();
-    //        if (_enemy.team != team)
-    //        {
-    //            status = UnitStatus.Attack;
-    //        }
-    //    }
-    //    else if (collision.collider.tag == "Back")
-    //    {
-    //        if (_teammate == null)
-    //        {
-    //            _teammate = collision.collider.GetComponent<Unit>();
-    //        }
-    //        status = UnitStatus.Stay;
-    //    }
-    //}
-    //private void OnCollisionStay2D(Collision2D collision)
-    //{
-    //    if (collision.collider.tag == "Front")
-    //    {
-    //        _enemy = collision.collider.GetComponent<Unit>();
-    //        if (_enemy.team != team)
-    //        {
-    //            status = UnitStatus.Attack;
-    //        }
-    //    }
-    //    else if (collision.collider.tag == "Back")
-    //    {
-    //        status = UnitStatus.Stay;
-    //    }
-    //}
-    //private void OnCollisionExit2D(Collision2D collision)
-    //{
-    //    if (collision.collider.tag == "Front")
-    //    {
-    //        if (_enemy != null) return;
-    //        _enemy = null;
-    //        status = UnitStatus.Move;
-    //    }
-    //    else if (collision.collider.tag == "Back")
-    //    {
-    //        if (_teammate == null)
-    //        {
-    //            status = UnitStatus.Move;
-    //        }
-    //        else
-    //        {
-    //            status = _teammate.status;
-    //        }
-            
-    //    }
-    //}
 }

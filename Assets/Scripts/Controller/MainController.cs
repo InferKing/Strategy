@@ -5,9 +5,10 @@ using System;
 
 public class MainController : MonoBehaviour
 {
-    [SerializeField] private Tower _tower;
+    [SerializeField] private Tower[] _tower;
     private void Start()
     {
+        TextController.updatePlayerUI?.Invoke();
         StartCoroutine(StartAddMoney());
     }
 
@@ -16,7 +17,8 @@ public class MainController : MonoBehaviour
         while (Singleton.Instance.Player.IsAlive())
         {
             yield return new WaitForSeconds(1.5f);
-            _tower.CalculateHealth();
+            _tower[0].CalculateHealth();
+            _tower[1].CalculateHealth();
             Singleton.Instance.Player.CalculateRep();
             TextController.updatePlayerUI?.Invoke();
         }

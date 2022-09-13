@@ -16,13 +16,13 @@ public class Cannon : MonoBehaviour
     {
         if (Singleton.Instance.Player.IsAlive())
         {
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.right, _myTower.GetTurretRadius());
-            foreach (var hit in hits)
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, _myTower.team == 1 ? Vector2.right : Vector2.left, _myTower.GetTurretRadius());
+            for(int i = hits.Length-1; i >= 0; i--)
             {
-                if (hit.collider != null)
+                if (hits[i].collider != null)
                 {
                     Unit unit = null;
-                    bool isEnemy = hit.collider.gameObject.TryGetComponent<Unit>(out unit);
+                    bool isEnemy = hits[i].collider.gameObject.TryGetComponent<Unit>(out unit);
                     if (isEnemy && unit.team != _myTower.team)
                     {
                         _unit = unit;
@@ -51,7 +51,6 @@ public class Cannon : MonoBehaviour
                     _unit.isDead = true;
                     Singleton.Instance.Player.TryMoneyTransaction(_unit.price);
                     Singleton.Instance.Player.AddExperience(_unit.price);
-                    // Singleton.Instance.Player.AddReputation((_unit.price / 100) + 1);
                 }
                 TextController.updatePlayerUI?.Invoke();
                 _unit.status = UnitStatus.Death;
