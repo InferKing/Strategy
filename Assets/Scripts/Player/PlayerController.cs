@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public enum Difficult
 {
     Easy,
@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Tower _tower;
     [SerializeField] private Unit[] _units;
+    [SerializeField] private ButtonController _buttonController;
     private void Update()
     {
         if (Singleton.Instance.Player.IsAlive() && Input.anyKeyDown)
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
+            CheckInput();
         }
     }
     private int GetButtonIndex()
@@ -42,6 +44,18 @@ public class PlayerController : MonoBehaviour
         catch
         {
             return -1;
+        }
+    }
+    private void CheckInput()
+    {
+        switch (Input.inputString)
+        {
+            case "q":
+                _buttonController.GetMenu(0);
+                break;
+            case "w":
+                _buttonController.GetMenu(1);
+                break;
         }
     }
 }
