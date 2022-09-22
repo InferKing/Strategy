@@ -42,7 +42,7 @@ public class TextController : MonoBehaviour
         if (text != null)
         {
             text.gameObject.SetActive(true);
-            text.transform.position = new Vector3(unit.transform.position.x, unit.transform.position.y + 1, unit.transform.position.z);
+            text.transform.position = new Vector3(unit.transform.position.x, unit.transform.position.y + 2, unit.transform.position.z);
             text.text = damage.ToString();
             StartCoroutine(Fade(text.gameObject));
         }

@@ -203,7 +203,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _checkArea: {fileID: 2170639660670123482}
+  _boxCollider: {fileID: 9118606523133371632}
   _rb: {fileID: 2170639659853482395}
+  _animator: {fileID: 0}
   isDead: 0
   healthBar: {fileID: 2170639659675868092}
   status: 1

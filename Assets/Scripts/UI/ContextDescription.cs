@@ -6,9 +6,11 @@ public class ContextDescription : MonoBehaviour
 {
     [SerializeField] private GameObject _description;
     [SerializeField] private TMP_Text _descr1, _descr2;
-    [SerializeField] private Unit _unit;
+    [SerializeField] private GameObject _gObj;
+    private Unit _unit;
     private void Start()
     {
+        _unit = _gObj.GetComponentInChildren<Unit>();
         _descr1.text = $"Price: {_unit.price}\nDamage: {_unit.damage}";
         _descr2.text = $"HP: {_unit.maxHealth}\nAS: {_unit.attackSpeed}";
     }

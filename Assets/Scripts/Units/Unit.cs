@@ -19,8 +19,11 @@ public enum UnitType
 public class Unit : MonoBehaviour
 {
     [SerializeField] private GameObject _checkArea;
+    [SerializeField] private BoxCollider2D _boxCollider;
     [SerializeField] private Rigidbody2D _rb;
+    [SerializeField] private Animator _animator;
     [HideInInspector] public bool isDead = false;
+    private Collider2D[] _colliders;
     private Unit _enemy;
     private Tower _tower;
     public GameObject healthBar;
@@ -33,6 +36,8 @@ public class Unit : MonoBehaviour
 
     private void Start()
     {
+        status = UnitStatus.Move;
+        SetAnim();
         StartCoroutine(Life());
     }
     private IEnumerator Life()
@@ -40,126 +45,130 @@ public class Unit : MonoBehaviour
         while (status != UnitStatus.Death)
         {
             //Debug.Log($"{gameObject.name} has status {status}");
+            _colliders = GetColliders();
             GetEnemy();
             if (status is UnitStatus.Stay)
             {
                 StopMove();
+                SetAnim();
             }
             else if (status is UnitStatus.Move)
             {
                 Move(isLeft);
+                SetAnim();
             }
             else if (status is UnitStatus.Attack)
             {
                 if (_enemy != null || _tower != null)
                 {
                     StopMove();
-                    yield return new WaitForSeconds(attackSpeed);
-                    if (_enemy != null)
+                    SetAnim();
+                    if (_enemy != null || _tower != null)
                     {
-                        Attack(_enemy);
-                    }
-                    else if (_tower != null)
-                    {
-                        Attack(_tower);
+                        SetAnim();
                     }
                 }
             }
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        _boxCollider.enabled = false;
+        _rb.gravityScale = 0;
+        _rb.velocity = Vector2.zero;
+        SetAnim();
+        yield return new WaitForSeconds(1.5f);
+        Destroy(gameObject);
     }
 
     public virtual void Move(bool isLeft)
     {
         _rb.velocity = isLeft ? new Vector2(-1 * speed, _rb.velocity.y) : new Vector2(1 * speed, _rb.velocity.y);
     }
-    public virtual void Attack(Unit unit)
+    public virtual void Attack()
     {
-        int _damage = (int)UnityEngine.Random.Range(damage * 0.8f, damage * 1.2f);
-        unit.health -= _damage;
-        unit.health = Mathf.Clamp(unit.health, 0, unit.maxHealth);
-        unit.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)unit.health / unit.maxHealth,0,1), unit.healthBar.transform.localScale.y, 1);
-        TextController.showUnitUI?.Invoke(unit.gameObject, _damage);
-        if (unit.health == 0)
+        if (_enemy != null)
         {
-            if (unit.team == 2 && !unit.isDead)
+            int _damage = (int)UnityEngine.Random.Range(damage * 0.8f, damage * 1.2f);
+            _enemy.health -= _damage;
+            _enemy.health = Mathf.Clamp(_enemy.health, 0, _enemy.maxHealth);
+            _enemy.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)_enemy.health / _enemy.maxHealth, 0, 1), _enemy.healthBar.transform.localScale.y, 1);
+            TextController.showUnitUI?.Invoke(_enemy.gameObject, _damage);
+            if (_enemy.health == 0)
             {
-                unit.isDead = true;
-                Singleton.Instance.Player.TryMoneyTransaction(unit.price);
-                Singleton.Instance.Player.AddExperience(unit.price * 2);
-                Singleton.Instance.Player.AddReputation((unit.price / 100)+1);
-            }
-            else if (unit.team == 1 && !unit.isDead)
-            {
-                unit.isDead = true;
-                MainController.currentUnits -= 1;
+                if (_enemy.team == 2 && !_enemy.isDead)
+                {
+                    _enemy.isDead = true;
+                    Singleton.Instance.Player.TryMoneyTransaction(_enemy.price);
+                    Singleton.Instance.Player.AddExperience(_enemy.price * 2);
+                    Singleton.Instance.Player.AddReputation((_enemy.price / 100) + 1);
+                }
+                else if (_enemy.team == 1 && !_enemy.isDead)
+                {
+                    _enemy.isDead = true;
+                    MainController.currentUnits -= 1;
+                    TextController.updatePlayerUI?.Invoke();
+                }
                 TextController.updatePlayerUI?.Invoke();
+                _enemy.status = UnitStatus.Death;
+                status = UnitStatus.Move;
+                _enemy = null;
             }
-            TextController.updatePlayerUI?.Invoke();
-            unit.status = UnitStatus.Death;
-            unit.Die();
-            status = UnitStatus.Move;
-            _enemy = null;
         }
     }
-    public virtual void Attack(Tower unit)
+    public virtual void AttackTower()
     {
-        int _damage = (int)UnityEngine.Random.Range(damage * 0.8f, damage * 1.2f);
-        unit.health -= _damage;
-        unit.health = Mathf.Clamp(unit.health, 0, unit.maxHealth);
-        unit.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)unit.health / unit.maxHealth, 0, 1), unit.healthBar.transform.localScale.y, 1);
-        if (unit.health == 0)
+        if (_tower != null)
         {
-            status = UnitStatus.Move;
-            _tower = null;
+            int _damage = (int)UnityEngine.Random.Range(damage * 0.8f, damage * 1.2f);
+            _tower.health -= _damage;
+            _tower.health = Mathf.Clamp(_tower.health, 0, _tower.maxHealth);
+            _tower.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)_tower.health / _tower.maxHealth, 0, 1), _tower.healthBar.transform.localScale.y, 1);
+            if (_tower.health == 0)
+            {
+                status = UnitStatus.Move;
+                _tower = null;
+            }
         }
+    }
+    private Collider2D[] GetColliders()
+    {
+        return Physics2D.OverlapCircleAll(_checkArea.transform.position, radius);
+
     }
     private void GetEnemy()
     {
-        float dist = float.MaxValue;
-        Collider2D[] _enemies = Physics2D.OverlapCircleAll(_checkArea.transform.position, radius);
-        List<Unit> units = new List<Unit>();
         List<Tower> towers = new List<Tower>();
         Unit unit = null;
         Tower tower = null;
         bool isTeam = false;
-        foreach (var enemy in _enemies)
+        foreach (var enemy in _colliders)
         {
-            bool isEnemy = false, isTower = false;
-            isEnemy = enemy.TryGetComponent<Unit>(out unit);
+            bool isTower = false;
+            unit = enemy.gameObject.GetComponentInChildren<Unit>();
             isTower = enemy.TryGetComponent<Tower>(out tower);
-            if (isEnemy)
-            {
-                units.Add(unit);
-            }
-            else if (isTower)
+            if (isTower)
             {
                 towers.Add(tower);
             }
         }
-        unit = null;
-        foreach (var un in units)
+        tower = null;
+        if (unit == null)
         {
-            float newDist = Mathf.Abs((un.gameObject.transform.position - transform.position).magnitude);
-            if (newDist < dist && team != un.team)
+            status = UnitStatus.Move;
+        }
+        else if (type is UnitType.Melee)
+        {
+            if (team == unit.team && unit.status != UnitStatus.Attack && unit.status != UnitStatus.Death && unit.type != UnitType.Area)
             {
-                dist = newDist;
-                unit = un;
+                status = unit.status;
+                isTeam = true;
             }
-            if (type is UnitType.Melee)
+            else if (team == unit.team && unit.status == UnitStatus.Attack && unit.type != UnitType.Area)
             {
-                if (newDist < dist && team == un.team && un.status != UnitStatus.Attack && un.status != UnitStatus.Death && un.type != UnitType.Area)
-                {
-                    status = un.status;
-                    isTeam = true;
-                }
-                else if (newDist < dist && team == un.team && un.status == UnitStatus.Attack && un.type != UnitType.Area)
-                {
-                    status = UnitStatus.Stay;
-                    isTeam = true;
-                }
+                status = UnitStatus.Stay;
+                isTeam = true;
             }
         }
+        if (towers.Count == 0) _tower = null;
         foreach (var t in towers)
         {
             if (t.team != team)
@@ -169,7 +178,7 @@ public class Unit : MonoBehaviour
                 return;
             }
         }
-        if (unit != null)
+        if (unit != null && unit.team != team)
         {
             _enemy = unit;
             status = UnitStatus.Attack;
@@ -179,15 +188,16 @@ public class Unit : MonoBehaviour
             status = UnitStatus.Move;
         }
     }
+    private void SetAnim()
+    {
+        _animator.SetBool("Move", status == UnitStatus.Move);
+        _animator.SetBool("Idle", status == UnitStatus.Stay);
+        _animator.SetBool("Death", status == UnitStatus.Death);
+        _animator.SetBool("Attack", status == UnitStatus.Attack);
 
+    }
     public void StopMove()
     {
         _rb.velocity = new Vector2(0, _rb.velocity.y);
-    }
-
-    public void Die()
-    {
-        StopCoroutine(Life());
-        gameObject.SetActive(false);
     }
 }

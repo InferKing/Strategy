@@ -13,8 +13,17 @@ public enum Difficult
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Tower _tower;
-    [SerializeField] private Unit[] _units;
+    [SerializeField] private GameObject[] _gObjs;
     [SerializeField] private ButtonController _buttonController;
+    private Unit[] _units;
+    private void Awake()
+    {
+        _units = new Unit[_gObjs.Length];
+        for (int i = 0; i < _gObjs.Length; i++)
+        {
+            _units[i] = _gObjs[i].GetComponentInChildren<Unit>();
+        }
+    }
     private void Update()
     {
         if (Singleton.Instance.Player.IsAlive() && Input.anyKeyDown)

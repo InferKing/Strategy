@@ -22,18 +22,16 @@ public class Cannon : MonoBehaviour
                 if (hits[i].collider != null)
                 {
                     Unit unit = null;
-                    bool isEnemy = hits[i].collider.gameObject.TryGetComponent<Unit>(out unit);
-                    if (isEnemy && unit.team != _myTower.team)
+                    unit = hits[i].collider.gameObject.GetComponentInChildren<Unit>();
+                    if (unit != null && unit.team != _myTower.team)
                     {
                         _unit = unit;
                     }
                 }
             }
+            _animator.SetBool("Attack", _unit != null && hits.Length > 1);
         }
-        if (_unit != null)
-        {
-            _animator.SetTrigger("Attack");
-        }
+        
     }
     public void Attack() 
     {
@@ -60,7 +58,6 @@ public class Cannon : MonoBehaviour
                 }
                 TextController.updatePlayerUI?.Invoke();
                 _unit.status = UnitStatus.Death;
-                _unit.Die();
                 _unit = null;
             }
         }

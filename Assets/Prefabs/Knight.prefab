@@ -177,7 +177,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _checkArea: {fileID: 7106450142608065373}
+  _boxCollider: {fileID: 8094666537426613510}
   _rb: {fileID: 7106450142794868665}
+  _animator: {fileID: 0}
   isDead: 0
   healthBar: {fileID: 7106450142988315053}
   status: 1

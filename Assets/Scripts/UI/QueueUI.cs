@@ -7,7 +7,8 @@ public class QueueUI : MonoBehaviour
     [SerializeField] private Image[] _pos;
     [SerializeField] private Tower _tower;
     [SerializeField] private List<Sprite> _sprites;
-    [SerializeField] private Unit[] _units;
+    [SerializeField] private GameObject[] _gObjs;
+    private Unit[] _units;
     private Dictionary<Unit, Sprite> _dict;
     private void OnEnable()
     {
@@ -19,6 +20,11 @@ public class QueueUI : MonoBehaviour
     }
     private void Start()
     {
+        _units = new Unit[_gObjs.Length];
+        for (int i = 0; i < _gObjs.Length; i++)
+        {
+            _units[i] = _gObjs[i].GetComponentInChildren<Unit>();
+        }
         foreach(var item in _pos)
         {
             item.gameObject.SetActive(false);
