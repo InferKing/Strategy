@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class Model
+[CreateAssetMenu(fileName = "Model", menuName = "ScriptableObjects/Units", order = 1)]
+public class Model : ScriptableObject
 {
-    
+    public GameObject[] gameObjects;
 }

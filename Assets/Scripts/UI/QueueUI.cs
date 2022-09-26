@@ -39,11 +39,11 @@ public class QueueUI : MonoBehaviour
     {
         if (Singleton.Instance.Player.IsAlive())
         {
-            List<Unit> list = _tower.GetQueue();
+            List<GameObject> list = _tower.GetQueue();
             for (int i = 0; i < list.Count && i <_pos.Length; i++)
             {
                 Sprite sprite = null;
-                if (_dict.TryGetValue(list[i], out sprite))
+                if (_dict.TryGetValue(list[i].GetComponentInChildren<Unit>(), out sprite))
                 {
                     _pos[i].gameObject.SetActive(true);
                     _pos[i].sprite = sprite; 

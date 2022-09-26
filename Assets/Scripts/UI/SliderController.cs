@@ -17,7 +17,7 @@ public class SliderController : MonoBehaviour
     {
         while (Singleton.Instance.Player.IsAlive())
         {
-            List<Unit> queue = _tower.GetQueue();
+            List<GameObject> queue = _tower.GetQueue();
             if (queue.Count > 0)
             {
                 yield return StartCoroutine(Delay());

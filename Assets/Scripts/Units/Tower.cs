@@ -11,10 +11,10 @@ public class Tower : MonoBehaviour
     [SerializeField] private float turretDamage, turretSpeed, turretRadius;
     [SerializeField] private GameObject _spawner;
     [SerializeField] private int[] _priceForTower;
-    private List<Unit> units;
+    private List<GameObject> units;
     void Awake()
     {
-        units = new List<Unit>();
+        units = new List<GameObject>();
     }
     public void CalculateHealth()
     {
@@ -34,7 +34,7 @@ public class Tower : MonoBehaviour
         this.health += health;
         this.maxHealth += health;
     }
-    public void AddToQueue(Unit unit)
+    public void AddToQueue(GameObject unit)
     {
         units.Add(unit);
         MainController.currentUnits += 1;
@@ -81,6 +81,6 @@ public class Tower : MonoBehaviour
     public int GetRepairSpeed() => repairCount;
     public int GetLimitUnit() => limitUnit;
     public Vector3 GetSpawnerPos() => _spawner.transform.position;
-    public List<Unit> GetQueue() => units;
+    public List<GameObject> GetQueue() => units;
     public int[] GetTowerPrices() => _priceForTower;
 }

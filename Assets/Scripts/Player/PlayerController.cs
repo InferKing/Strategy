@@ -15,27 +15,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Tower _tower;
     [SerializeField] private GameObject[] _gObjs;
     [SerializeField] private ButtonController _buttonController;
-    private Unit[] _units;
     private void Awake()
     {
-        _units = new Unit[_gObjs.Length];
-        for (int i = 0; i < _gObjs.Length; i++)
-        {
-            _units[i] = _gObjs[i].GetComponentInChildren<Unit>();
-        }
+
     }
     private void Update()
     {
         if (Singleton.Instance.Player.IsAlive() && Input.anyKeyDown)
         {
             int index = GetButtonIndex();
-            if (index > 0 && index <= _units.Length)
+            if (index > 0 && index <= _gObjs.Length)
             {
-                if (Singleton.Instance.Player.GetExp() >= _units[index-1].unlockExp)
+                if (Singleton.Instance.Player.GetExp() >= _gObjs[index-1].GetComponentInChildren<Unit>().unlockExp)
                 {
-                    if (Singleton.Instance.Player.TryMoneyTransaction(-_units[index - 1].price))
+                    if (Singleton.Instance.Player.TryMoneyTransaction(-_gObjs[index - 1].GetComponentInChildren<Unit>().price))
                     {
-                        _tower.AddToQueue(_units[index - 1]);
+                        _tower.AddToQueue(_gObjs[index - 1]);
                         TextController.updatePlayerUI?.Invoke();
                     }
                 }
@@ -72,7 +67,6 @@ public class PlayerController : MonoBehaviour
 public class Player
 {
     private int money, reputation, experience, towerHealth;
-    private bool _flag;
     public Player(int money, int reputation, int experience)
     {
         this.money = money;
