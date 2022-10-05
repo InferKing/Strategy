@@ -20,6 +20,10 @@ public class Tower : MonoBehaviour
     {
         health += repairCount;
         health = Mathf.Clamp(health, 0, maxHealth);
+        if (team == 1)
+        {
+            Singleton.Instance.Player.SetHealth(health);
+        }
         healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)health / maxHealth, 0, 1), healthBar.transform.localScale.y, 1);
     }
     public void UpdateCannon(int percDamage, int percSpeed, int percRadius)

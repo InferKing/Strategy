@@ -15,10 +15,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Tower _tower;
     [SerializeField] private GameObject[] _gObjs;
     [SerializeField] private ButtonController _buttonController;
-    private void Awake()
-    {
-
-    }
     private void Update()
     {
         if (Singleton.Instance.Player.IsAlive() && Input.anyKeyDown)
@@ -66,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
 public class Player
 {
-    private int money, reputation, experience, towerHealth;
+    protected int money, reputation, experience, towerHealth;
     public Player(int money, int reputation, int experience)
     {
         this.money = money;
@@ -95,6 +91,10 @@ public class Player
     {
         TryMoneyTransaction(5+reputation/10);
     }
+    public void SetHealth(int health)
+    {
+        towerHealth = health;
+    }
     public bool IsAlive()
     {
         return towerHealth > 0;
@@ -104,13 +104,3 @@ public class Player
     public int GetRep() => reputation;
     public int GetHealth() => towerHealth;
 }
-
-public class Bot : Player
-{
-    private float _difficult;
-    public Bot(float difficult, int money, int reputation, int experience) : base(money, reputation,experience)
-    {
-        _difficult = difficult;
-    }
-}
-

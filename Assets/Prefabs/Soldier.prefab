@@ -85,7 +85,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6deb78c78759c1d439e2f3ae40d34406, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -309,6 +309,10 @@ PrefabInstance:
       propertyPath: m_Bounds.m_Center.y
       value: 0.00390625
       objectReference: {fileID: 0}
+    - target: {fileID: 7398189225211268886, guid: ae3265a4e5b97c948a874a36721eba9c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     - target: {fileID: 7872762291530380837, guid: ae3265a4e5b97c948a874a36721eba9c, type: 3}
       propertyPath: m_RootOrder
       value: 2

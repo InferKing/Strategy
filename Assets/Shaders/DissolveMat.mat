@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Fade: 1
+    - _Fade: 0.146
     - _Scale: 10
     m_Colors:
     - Color_ab9372f6aee64a0f8a2144542247e18e: {r: 6.27451, g: 0, b: 0, a: 0}
