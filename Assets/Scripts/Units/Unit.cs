@@ -22,8 +22,9 @@ public class Unit : MonoBehaviour
     [SerializeField] private BoxCollider2D _boxCollider;
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private Animator _animator;
+    [SerializeField] private RaycastUnit _rayUnit;
     [HideInInspector] public bool isDead = false;
-    private Collider2D[] _colliders;
+    //private Collider2D[] _colliders;
     private Unit _enemy;
     private Tower _tower;
     public GameObject healthBar;
@@ -45,7 +46,7 @@ public class Unit : MonoBehaviour
         while (status != UnitStatus.Death)
         {
             //Debug.Log($"{gameObject.name} has status {status}");
-            _colliders = GetColliders();
+            //_colliders = GetColliders();
             GetEnemy();
             if (status is UnitStatus.Stay)
             {
@@ -129,64 +130,84 @@ public class Unit : MonoBehaviour
             }
         }
     }
-    private Collider2D[] GetColliders()
-    {
-        return Physics2D.OverlapCircleAll(_checkArea.transform.position, radius);
+    //private Collider2D[] GetColliders()
+    //{
+    //    return Physics2D.OverlapCircleAll(_checkArea.transform.position, radius);
 
-    }
+    //}
     private void GetEnemy()
     {
-        List<Tower> towers = new List<Tower>();
-        Unit unit = null;
-        Tower tower = null;
-        bool isTeam = false;
-        foreach (var enemy in _colliders)
-        {
-            bool isTower = false;
-            unit = enemy.gameObject.GetComponentInChildren<Unit>();
-            isTower = enemy.TryGetComponent<Tower>(out tower);
-            if (isTower)
-            {
-                towers.Add(tower);
-            }
-        }
-        tower = null;
+        Unit unit = _rayUnit.GetRaycastUnit(isLeft, radius);
         if (unit == null)
         {
+            _enemy = null;
             status = UnitStatus.Move;
+            return;
         }
-        else if (type is UnitType.Melee)
+        if (unit.team != team)
         {
-            if (team == unit.team && unit.status != UnitStatus.Attack && unit.status != UnitStatus.Death && unit.type != UnitType.Area)
-            {
-                status = unit.status;
-                isTeam = true;
-            }
-            else if (team == unit.team && unit.status == UnitStatus.Attack && unit.type != UnitType.Area)
-            {
-                status = UnitStatus.Stay;
-                isTeam = true;
-            }
-        }
-        if (towers.Count == 0) _tower = null;
-        foreach (var t in towers)
-        {
-            if (t.team != team)
-            {
-                _tower = t;
-                status = UnitStatus.Attack;
-                return;
-            }
-        }
-        if (unit != null && unit.team != team)
-        {
-            _enemy = unit;
             status = UnitStatus.Attack;
+            _enemy = unit;
         }
-        else if (!isTeam)
+        else if (unit.type is UnitType.Melee)
+        {
+            status = unit.status == UnitStatus.Attack ? UnitStatus.Stay : unit.status;
+        }
+        else
         {
             status = UnitStatus.Move;
         }
+        //List<Tower> towers = new List<Tower>();
+        //Unit unit = null;
+        //Tower tower = null;
+        //bool isTeam = false;
+        //foreach (var enemy in _colliders)
+        //{
+        //    bool isTower = false;
+        //    unit = enemy.gameObject.GetComponentInChildren<Unit>();
+        //    isTower = enemy.TryGetComponent<Tower>(out tower);
+        //    if (isTower)
+        //    {
+        //        towers.Add(tower);
+        //    }
+        //}
+        //tower = null;
+        //if (unit == null && _enemy == null)
+        //{
+        //    status = UnitStatus.Move;
+        //}
+        //else if (type is UnitType.Melee)
+        //{
+        //    if (team == unit.team && unit.status != UnitStatus.Attack && unit.status != UnitStatus.Death && unit.type != UnitType.Area)
+        //    {
+        //        status = unit.status;
+        //        isTeam = true;
+        //    }
+        //    else if (team == unit.team && unit.status == UnitStatus.Attack && unit.type != UnitType.Area)
+        //    {
+        //        status = UnitStatus.Stay;
+        //        isTeam = true;
+        //    }
+        //}
+        //if (towers.Count == 0) _tower = null;
+        //foreach (var t in towers)
+        //{
+        //    if (t.team != team)
+        //    {
+        //        _tower = t;
+        //        status = UnitStatus.Attack;
+        //        return;
+        //    }
+        //}
+        //if (unit != null && unit.team != team)
+        //{
+        //    _enemy = unit;
+        //    status = UnitStatus.Attack;
+        //}
+        //else if (!isTeam)
+        //{
+        //    status = UnitStatus.Move;
+        //}
     }
     private void SetAnim()
     {
