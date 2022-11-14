@@ -18,15 +18,14 @@ public enum UnitType
 
 public class Unit : MonoBehaviour
 {
-    [SerializeField] private GameObject _checkArea;
     [SerializeField] private BoxCollider2D _boxCollider;
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private Animator _animator;
     [SerializeField] private RaycastUnit _rayUnit;
     [HideInInspector] public bool isDead = false;
-    //private Collider2D[] _colliders;
     private Unit _enemy;
     private Tower _tower;
+    private float coefAttack = 0.2f;
     public GameObject healthBar;
     public UnitStatus status;
     public UnitType type;
@@ -37,6 +36,10 @@ public class Unit : MonoBehaviour
 
     private void Start()
     {
+        if (type is UnitType.Melee)
+        {
+            radius = _boxCollider.size.x / 2 + 0.1f;
+        }
         status = UnitStatus.Move;
         SetAnim();
         StartCoroutine(Life());
@@ -45,9 +48,10 @@ public class Unit : MonoBehaviour
     {
         while (status != UnitStatus.Death)
         {
-            //Debug.Log($"{gameObject.name} has status {status}");
-            //_colliders = GetColliders();
-            GetEnemy();
+            if (_enemy == null && _tower == null)
+            {
+                GetEnemy();
+            }
             if (status is UnitStatus.Stay)
             {
                 StopMove();
@@ -76,19 +80,19 @@ public class Unit : MonoBehaviour
         _rb.gravityScale = 0;
         _rb.velocity = Vector2.zero;
         SetAnim();
+        isDead = true;
         yield return new WaitForSeconds(1.5f);
         Destroy(gameObject);
     }
-
     public virtual void Move(bool isLeft)
     {
         _rb.velocity = isLeft ? new Vector2(-1 * speed, _rb.velocity.y) : new Vector2(1 * speed, _rb.velocity.y);
     }
     public virtual void Attack()
     {
-        if (_enemy != null)
+        if (_enemy != null && !_enemy.isDead)
         {
-            int _damage = (int)UnityEngine.Random.Range(damage * 0.8f, damage * 1.2f);
+            int _damage = (int)UnityEngine.Random.Range(damage * (1 - coefAttack), damage * (1 + coefAttack));
             _enemy.health -= _damage;
             _enemy.health = Mathf.Clamp(_enemy.health, 0, _enemy.maxHealth);
             _enemy.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)_enemy.health / _enemy.maxHealth, 0, 1), _enemy.healthBar.transform.localScale.y, 1);
@@ -119,7 +123,7 @@ public class Unit : MonoBehaviour
     {
         if (_tower != null)
         {
-            int _damage = (int)UnityEngine.Random.Range(damage * 0.8f, damage * 1.2f);
+            int _damage = (int)UnityEngine.Random.Range(damage * (1 - coefAttack), damage * (1 + coefAttack));
             _tower.health -= _damage;
             _tower.health = Mathf.Clamp(_tower.health, 0, _tower.maxHealth);
             _tower.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)_tower.health / _tower.maxHealth, 0, 1), _tower.healthBar.transform.localScale.y, 1);
@@ -130,28 +134,37 @@ public class Unit : MonoBehaviour
             }
         }
     }
-    //private Collider2D[] GetColliders()
-    //{
-    //    return Physics2D.OverlapCircleAll(_checkArea.transform.position, radius);
-
-    //}
     private void GetEnemy()
     {
         Unit unit = _rayUnit.GetRaycastUnit(isLeft, radius);
+        Tower tower = _rayUnit.GetRaycastTower(isLeft,radius);
         if (unit == null)
         {
             _enemy = null;
+            if (tower != null && tower.team != team)
+            {
+                _tower = tower;
+                status = UnitStatus.Attack;
+                return;
+            }
             status = UnitStatus.Move;
             return;
         }
-        if (unit.team != team)
+        if (unit.team != team && !unit.isDead)
         {
             status = UnitStatus.Attack;
             _enemy = unit;
         }
         else if (unit.type is UnitType.Melee)
         {
-            status = unit.status == UnitStatus.Attack ? UnitStatus.Stay : unit.status;
+            if (unit.status is UnitStatus.Death)
+            {
+                status = UnitStatus.Move;
+            }
+            else
+            {
+                status = unit.status == UnitStatus.Attack ? UnitStatus.Stay : unit.status;
+            }
         }
         else
         {

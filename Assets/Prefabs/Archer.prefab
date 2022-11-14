@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layersToIgnore: 0700000008000000
+  curLayer: 8
 --- !u!1 &7106450142988315053
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,7 +651,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f91b8285a2b164d42949922ba8473f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _checkArea: {fileID: 7106450142608065373}
   _boxCollider: {fileID: 5927322901893597592}
   _rb: {fileID: 7106450142794868665}
   _animator: {fileID: 4198207652934853035}
