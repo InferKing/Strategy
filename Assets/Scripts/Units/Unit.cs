@@ -137,7 +137,7 @@ public class Unit : MonoBehaviour
     private void GetEnemy()
     {
         Unit unit = _rayUnit.GetRaycastUnit(isLeft, radius);
-        Tower tower = _rayUnit.GetRaycastTower(isLeft,radius);
+        Tower tower = _rayUnit.GetRaycastTower(isLeft,radius, type);
         if (unit == null)
         {
             _enemy = null;

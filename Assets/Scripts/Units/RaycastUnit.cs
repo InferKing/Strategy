@@ -47,11 +47,11 @@ public class RaycastUnit : MonoBehaviour
         }
         return result;
     }
-    public Tower GetRaycastTower(bool dir, float radius)
+    public Tower GetRaycastTower(bool dir, float radius, UnitType type)
     {
         Tower result = null;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir ? Vector3.left : Vector3.right, 
-            radius, ~(int)Mathf.Pow(2,curLayer));
+            radius, type is UnitType.Melee ? ~(int)Mathf.Pow(2, curLayer) : ~layerMask);
         if (hit.collider != null)
         {
             bool b = hit.collider.gameObject.TryGetComponent<Tower>(out result);
