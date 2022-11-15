@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class Tower : MonoBehaviour
 {
     public GameObject healthBar;
@@ -12,6 +12,15 @@ public class Tower : MonoBehaviour
     [SerializeField] private GameObject _spawner;
     [SerializeField] private int[] _priceForTower;
     private List<GameObject> units;
+    public static Action<Tower> OnTowerAttack;
+    private void OnEnable()
+    {
+        OnTowerAttack += SendTowerToBot;
+    }
+    private void OnDisable()
+    {
+        OnTowerAttack -= SendTowerToBot;
+    }
     void Awake()
     {
         units = new List<GameObject>();
@@ -62,6 +71,10 @@ public class Tower : MonoBehaviour
         }
         return false;
         
+    }
+    private void SendTowerToBot(Tower tower)
+    {
+        StateDeterminer.OnGetActionTower?.Invoke(tower);
     }
     private bool CheckSpawnPos()
     {

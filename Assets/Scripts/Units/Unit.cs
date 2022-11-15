@@ -123,10 +123,12 @@ public class Unit : MonoBehaviour
     {
         if (_tower != null)
         {
+            Tower.OnTowerAttack?.Invoke(_tower);
             int _damage = (int)UnityEngine.Random.Range(damage * (1 - coefAttack), damage * (1 + coefAttack));
             _tower.health -= _damage;
             _tower.health = Mathf.Clamp(_tower.health, 0, _tower.maxHealth);
-            _tower.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)_tower.health / _tower.maxHealth, 0, 1), _tower.healthBar.transform.localScale.y, 1);
+            _tower.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)_tower.health / _tower.maxHealth, 0, 1),
+                _tower.healthBar.transform.localScale.y, 1);
             if (_tower.health == 0)
             {
                 status = UnitStatus.Move;
