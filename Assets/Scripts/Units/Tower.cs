@@ -50,7 +50,7 @@ public class Tower : MonoBehaviour
     public void AddToQueue(GameObject unit)
     {
         units.Add(unit);
-        MainController.currentUnits += 1;
+        if (team == 1) MainController.currentUnits += 1;
     }
     public void RemoveUnit()
     {
@@ -66,7 +66,7 @@ public class Tower : MonoBehaviour
             GameObject unit = Instantiate(units[0].gameObject);
             unit.transform.position = GetSpawnerPos();
             RemoveUnit();
-            TextController.updatePlayerUI?.Invoke();
+            if (team == 1) TextController.updatePlayerUI?.Invoke();
             return true;
         }
         return false;
@@ -78,7 +78,8 @@ public class Tower : MonoBehaviour
     }
     private bool CheckSpawnPos()
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(_spawner.transform.position, transform.right, 0.6f);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(_spawner.transform.position, 
+            team == 1 ? transform.right : -transform.right, 0.6f);
         foreach(var hit in hits)
         {
             Unit unit;
