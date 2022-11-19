@@ -10,6 +10,7 @@ public class Tower : MonoBehaviour
     [SerializeField] private int repairCount, limitUnit;
     [SerializeField] private float turretDamage, turretSpeed, turretRadius;
     [SerializeField] private GameObject _spawner;
+    [SerializeField] private PoolUnits _poolUnits;
     [SerializeField] private int[] _priceForTower;
     private List<GameObject> units;
     public static Action<Tower> OnTowerAttack;
@@ -63,7 +64,10 @@ public class Tower : MonoBehaviour
     {
         if (MainController.currentUnits - units.Count < limitUnit && CheckSpawnPos())
         {
-            GameObject unit = Instantiate(units[0].gameObject);
+            GameObject unit = null;
+            if (team != 1) unit = Instantiate(units[0]);
+            else unit = _poolUnits.GetUnitOfType(units[0].GetComponentInChildren<Unit>().type);
+            unit.SetActive(true);
             unit.transform.position = GetSpawnerPos();
             RemoveUnit();
             if (team == 1) TextController.updatePlayerUI?.Invoke();

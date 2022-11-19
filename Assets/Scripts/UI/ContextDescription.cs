@@ -12,7 +12,7 @@ public class ContextDescription : MonoBehaviour
     {
         _unit = _gObj.GetComponentInChildren<Unit>();
         _descr1.text = $"Price: {_unit.price}\nDamage: {_unit.damage}";
-        _descr2.text = $"HP: {_unit.maxHealth}\nAS: {_unit.attackSpeed}";
+        _descr2.text = $"HP: {_unit.maxHealth}";
     }
     public void OnPointerEnter()
     {

@@ -18,7 +18,7 @@ public class Clouds : MonoBehaviour
         for (int i = 0; i < _cloudCount; i++)
         {
             GameObject obj = Instantiate(_clouds[Random.Range(0,_clouds.Length)]);
-            obj.transform.position = new Vector3(Random.Range(-29f,29f), Random.Range(3f,5f), 0);
+            obj.transform.position = new Vector3(Random.Range(-29f,29f), Random.Range(12f,14f), 0);
             gameObjects.Add(obj);
         }
         foreach (GameObject obj in gameObjects)

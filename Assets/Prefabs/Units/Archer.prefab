@@ -655,15 +655,15 @@ MonoBehaviour:
   _rb: {fileID: 7106450142794868665}
   _animator: {fileID: 4198207652934853035}
   _rayUnit: {fileID: 7543063740144708290}
+  _parent: {fileID: 7106450142794868664}
   isDead: 0
   healthBar: {fileID: 7106450142988315053}
   status: 1
   type: 1
-  attackSpeed: 0.8
   radius: 3
   speed: 1.4
   health: 40
-  damage: 8
+  damage: 6
   maxHealth: 40
   price: 75
   unlockExp: 1000

@@ -409,11 +409,11 @@ MonoBehaviour:
   _rb: {fileID: 7106450142794868665}
   _animator: {fileID: 7270938016133999012}
   _rayUnit: {fileID: 4626037723704770348}
+  _parent: {fileID: 7106450142794868664}
   isDead: 0
   healthBar: {fileID: 7106450142988315053}
   status: 1
   type: 0
-  attackSpeed: 1.3
   radius: 0.05
   speed: 1.5
   health: 75

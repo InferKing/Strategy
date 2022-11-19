@@ -22,20 +22,23 @@ public class Unit : MonoBehaviour
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private Animator _animator;
     [SerializeField] private RaycastUnit _rayUnit;
+    [SerializeField] private GameObject _parent;
     [HideInInspector] public bool isDead = false;
+    private PoolUnits _poolUnits;
     private Unit _enemy;
     private Tower _tower;
     private float coefAttack = 0.2f;
     public GameObject healthBar;
     public UnitStatus status;
     public UnitType type;
-    public float attackSpeed, radius, speed;
+    public float radius, speed;
     public int health, damage, maxHealth, price, unlockExp; // team should be 1 or 2
     [Range(1, 2)] public int team;
     public bool isLeft;
 
     private void Start()
     {
+        _poolUnits = GameObject.FindObjectOfType<PoolUnits>();
         if (type is UnitType.Melee)
         {
             radius = _boxCollider.size.x / 2 + 0.1f;
@@ -82,7 +85,11 @@ public class Unit : MonoBehaviour
         SetAnim();
         isDead = true;
         yield return new WaitForSeconds(1.5f);
-        Destroy(gameObject);
+        if (team == 1) _poolUnits.SetDestroy(_parent, _boxCollider);
+        else
+        {
+            Destroy(_parent);
+        }
     }
     public virtual void Move(bool isLeft)
     {
@@ -172,57 +179,6 @@ public class Unit : MonoBehaviour
         {
             status = UnitStatus.Move;
         }
-        //List<Tower> towers = new List<Tower>();
-        //Unit unit = null;
-        //Tower tower = null;
-        //bool isTeam = false;
-        //foreach (var enemy in _colliders)
-        //{
-        //    bool isTower = false;
-        //    unit = enemy.gameObject.GetComponentInChildren<Unit>();
-        //    isTower = enemy.TryGetComponent<Tower>(out tower);
-        //    if (isTower)
-        //    {
-        //        towers.Add(tower);
-        //    }
-        //}
-        //tower = null;
-        //if (unit == null && _enemy == null)
-        //{
-        //    status = UnitStatus.Move;
-        //}
-        //else if (type is UnitType.Melee)
-        //{
-        //    if (team == unit.team && unit.status != UnitStatus.Attack && unit.status != UnitStatus.Death && unit.type != UnitType.Area)
-        //    {
-        //        status = unit.status;
-        //        isTeam = true;
-        //    }
-        //    else if (team == unit.team && unit.status == UnitStatus.Attack && unit.type != UnitType.Area)
-        //    {
-        //        status = UnitStatus.Stay;
-        //        isTeam = true;
-        //    }
-        //}
-        //if (towers.Count == 0) _tower = null;
-        //foreach (var t in towers)
-        //{
-        //    if (t.team != team)
-        //    {
-        //        _tower = t;
-        //        status = UnitStatus.Attack;
-        //        return;
-        //    }
-        //}
-        //if (unit != null && unit.team != team)
-        //{
-        //    _enemy = unit;
-        //    status = UnitStatus.Attack;
-        //}
-        //else if (!isTeam)
-        //{
-        //    status = UnitStatus.Move;
-        //}
     }
     private void SetAnim()
     {
