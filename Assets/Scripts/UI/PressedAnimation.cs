@@ -7,6 +7,7 @@ public class PressedAnimation : MonoBehaviour
     [SerializeField] private float _limit;
     public void AnimationButton()
     {
+        StopAllCoroutines();
         StartCoroutine(StartAnim());
     }
     private IEnumerator StartAnim()

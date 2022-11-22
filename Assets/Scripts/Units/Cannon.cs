@@ -23,7 +23,7 @@ public class Cannon : MonoBehaviour
                 {
                     Unit unit = null;
                     unit = hits[i].collider.gameObject.GetComponentInChildren<Unit>();
-                    if (unit != null && unit.team != _myTower.team)
+                    if (unit != null && !unit.isDead && unit.team != _myTower.team)
                     {
                         _unit = unit;
                     }

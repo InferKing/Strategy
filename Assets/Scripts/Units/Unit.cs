@@ -24,7 +24,6 @@ public class Unit : MonoBehaviour
     [SerializeField] private RaycastUnit _rayUnit;
     [SerializeField] private GameObject _parent;
     [HideInInspector] public bool isDead = false;
-    private PoolUnits _poolUnits;
     private Unit _enemy;
     private Tower _tower;
     private float coefAttack = 0.2f;
@@ -38,7 +37,6 @@ public class Unit : MonoBehaviour
 
     private void Start()
     {
-        _poolUnits = GameObject.FindObjectOfType<PoolUnits>();
         if (type is UnitType.Melee)
         {
             radius = _boxCollider.size.x / 2 + 0.1f;
@@ -49,12 +47,9 @@ public class Unit : MonoBehaviour
     }
     private IEnumerator Life()
     {
-        while (status != UnitStatus.Death)
+        while (status != UnitStatus.Death && health > 0)
         {
-            if (_enemy == null && _tower == null)
-            {
-                GetEnemy();
-            }
+            GetEnemy();
             if (status is UnitStatus.Stay)
             {
                 StopMove();
@@ -79,17 +74,14 @@ public class Unit : MonoBehaviour
             }
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        status = UnitStatus.Death;
         _boxCollider.enabled = false;
         _rb.gravityScale = 0;
         _rb.velocity = Vector2.zero;
         SetAnim();
         isDead = true;
         yield return new WaitForSeconds(1.5f);
-        if (team == 1) _poolUnits.SetDestroy(_parent, _boxCollider);
-        else
-        {
-            Destroy(_parent);
-        }
+        Destroy(_parent);
     }
     public virtual void Move(bool isLeft)
     {
@@ -180,7 +172,7 @@ public class Unit : MonoBehaviour
             status = UnitStatus.Move;
         }
     }
-    private void SetAnim()
+    public void SetAnim()
     {
         _animator.SetBool("Move", status == UnitStatus.Move);
         _animator.SetBool("Idle", status == UnitStatus.Stay);

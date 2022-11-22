@@ -652,6 +652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boxCollider: {fileID: 5927322901893597592}
+  _spriteRenderer: {fileID: 7106450142794868666}
   _rb: {fileID: 7106450142794868665}
   _animator: {fileID: 4198207652934853035}
   _rayUnit: {fileID: 7543063740144708290}
