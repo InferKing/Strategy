@@ -29,20 +29,34 @@ public class RaycastUnit : MonoBehaviour
         }
         return null;
     }
-    public List<Unit> GetRaycastUnitAll(bool dir, float radius)
+    public List<Unit> GetRaycastUnitAll(Vector2 from, Vector2 dir, float radius)
     {
         List<Unit> result = new List<Unit>();
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, dir ? Vector3.left : Vector3.right, 
-            radius, ~layerMask);
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(from, dir, radius, ~layerMask);
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider != null)
             {
                 Unit unit = hit.collider.gameObject.GetComponentInChildren<Unit>();
-                if (unit != null && Mathf.Abs(unit.gameObject.transform.position.x - transform.position.x) > eps)
+                if (unit != null && Mathf.Abs(unit.gameObject.transform.position.x - from.x) > eps)
                 {
                     result.Add(unit);
                 }
+            }
+        }
+        return result;
+    }
+    public List<Unit> GetOverlapUnitAll(Vector2 point1, Vector2 point2, int team)
+    {
+        List<Unit> result = new List<Unit>();
+        Collider2D[] hits = Physics2D.OverlapAreaAll(point1, point2);
+        foreach (Collider2D hit in hits)
+        {
+            Unit unit = hit.gameObject.GetComponentInChildren<Unit>();
+            if (unit != null && team != unit.team)
+            {
+                result.Add(unit);
             }
         }
         return result;

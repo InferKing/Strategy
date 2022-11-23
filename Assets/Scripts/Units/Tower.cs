@@ -81,16 +81,13 @@ public class Tower : MonoBehaviour
     private bool CheckSpawnPos()
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(_spawner.transform.position, 
-            team == 1 ? transform.right : -transform.right, 0.6f);
+            team == 1 ? Vector2.right : Vector2.left, 0.6f);
         foreach(var hit in hits)
         {
-            Unit unit;
-            if (hit.collider.gameObject.TryGetComponent<Unit>(out unit))
+            Unit unit = hit.collider.gameObject.GetComponentInChildren<Unit>();
+            if (unit != null && unit.type is UnitType.Melee)
             {
-                if (unit.type is UnitType.Melee)
-                {
-                    return false;
-                }
+                return false;
             }
         }
         return true;

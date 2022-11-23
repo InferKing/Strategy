@@ -12386,6 +12386,8 @@ MonoBehaviour:
   - {fileID: 7106450142794868664, guid: 41897b3603265dc4d93bb5ff6ab030cc, type: 3}
   - {fileID: 7106450142794868664, guid: 1d92bfd7e4fb64845b8e80966566e5cd, type: 3}
   - {fileID: 7106450142794868664, guid: dede400f5ac5bea4db495da1ec99d4f2, type: 3}
+  _spells:
+  - {fileID: 9113237232290225841, guid: 29440b1df754f1c4395cace204d777e7, type: 3}
 --- !u!4 &1096956338
 Transform:
   m_ObjectHideFlags: 0
@@ -13691,7 +13693,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1096956337}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: SetTower
+        m_MethodName: SetSpell
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

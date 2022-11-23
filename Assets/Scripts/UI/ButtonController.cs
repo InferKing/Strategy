@@ -9,6 +9,7 @@ public class ButtonController : MonoBehaviour
     [SerializeField] private Tower _tower;
     [SerializeField] private GameObject[] _menu;
     [SerializeField] private GameObject[] _units;
+    [SerializeField] private GameObject[] _spells;
     public void GetMenu(int index)
     {
         for (int i = 0; i < _menu.Length; i++)
@@ -56,7 +57,16 @@ public class ButtonController : MonoBehaviour
             int x = _tower.GetTowerPrices()[index];
             _tower.GetTowerPrices()[index] += (int)Mathf.Round(x * 0.5f);
             UpdateButtonDescriptions?.Invoke();
-            
         }
+    }
+    public void SetSpell(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                Instantiate(_spells[index]);
+                break;
+        }
+
     }
 }
