@@ -113,7 +113,7 @@ public class Unit : MonoBehaviour
                 }
                 TextController.updatePlayerUI?.Invoke();
                 _enemy.status = UnitStatus.Death;
-                status = UnitStatus.Move;
+                GetEnemy();
                 _enemy = null;
             }
         }

@@ -23,6 +23,6 @@ public class FistSpell : BaseSpell
         }
         _animator.SetBool("Attack", true);
         Vector2 vect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        _enemies = _raycastUnit.GetOverlapUnitAll(new Vector2(vect.x - 1, vect.y), new Vector2(vect.x + 1, vect.y - 20), _team);
+        _enemies = _raycastUnit.GetOverlapUnitAll(new Vector2(vect.x - 1.3f, vect.y), new Vector2(vect.x + 1.3f, vect.y - 20), _team);
     }
 }
