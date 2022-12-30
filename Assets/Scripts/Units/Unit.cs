@@ -27,6 +27,7 @@ public class Unit : MonoBehaviour
     private Unit _enemy;
     private Tower _tower;
     private float coefAttack = 0.2f;
+    public ParticleSystem particleSystem;
     public GameObject healthBar;
     public UnitStatus status;
     public UnitType type;
@@ -96,6 +97,7 @@ public class Unit : MonoBehaviour
             _enemy.health = Mathf.Clamp(_enemy.health, 0, _enemy.maxHealth);
             _enemy.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)_enemy.health / _enemy.maxHealth, 0, 1), _enemy.healthBar.transform.localScale.y, 1);
             TextController.showUnitUI?.Invoke(_enemy.gameObject, _damage);
+            _enemy.particleSystem.Play();
             if (_enemy.health == 0)
             {
                 if (_enemy.team == 2 && !_enemy.isDead)
