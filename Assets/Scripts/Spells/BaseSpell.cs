@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BaseSpell : MonoBehaviour
 {
+    public int cost = 500;
     protected int damage = 100;
     protected float coefAttack = 0;
     protected List<Unit> _enemies = new List<Unit>();

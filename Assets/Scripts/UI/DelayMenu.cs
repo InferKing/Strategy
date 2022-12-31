@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Spawner : MonoBehaviour
+using UnityEngine.UI;
+using TMPro;
+public class DelayMenu : MonoBehaviour
 {
-
+    
 }

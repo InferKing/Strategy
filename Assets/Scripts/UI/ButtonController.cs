@@ -61,9 +61,13 @@ public class ButtonController : MonoBehaviour
     }
     public void SetSpell(int index)
     {
+        if (Singleton.Instance.Player.TryMoneyTransaction(-_spells[index].GetComponentInChildren<BaseSpell>().cost))
         switch (index)
         {
             case 0:
+                Instantiate(_spells[index]);
+                break;
+            case 1:
                 Instantiate(_spells[index]);
                 break;
         }

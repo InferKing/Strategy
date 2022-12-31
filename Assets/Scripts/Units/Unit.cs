@@ -31,13 +31,14 @@ public class Unit : MonoBehaviour
     public GameObject healthBar;
     public UnitStatus status;
     public UnitType type;
-    public float radius, speed;
+    public float radius, speed, curSpeed;
     public int health, damage, maxHealth, price, unlockExp; // team should be 1 or 2
     [Range(1, 2)] public int team;
     public bool isLeft;
 
     private void Start()
     {
+        curSpeed = speed;
         if (type is UnitType.Melee)
         {
             radius = _boxCollider.size.x / 2 + 0.1f;
@@ -86,7 +87,7 @@ public class Unit : MonoBehaviour
     }
     public virtual void Move(bool isLeft)
     {
-        _rb.velocity = isLeft ? new Vector2(-1 * speed, _rb.velocity.y) : new Vector2(1 * speed, _rb.velocity.y);
+        _rb.velocity = isLeft ? new Vector2(-1 * curSpeed, _rb.velocity.y) : new Vector2(1 * curSpeed, _rb.velocity.y);
     }
     public virtual void Attack()
     {

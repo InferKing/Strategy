@@ -10,6 +10,7 @@ public class FistSpell : BaseSpell
     [SerializeField] private int _team;
     void Start()
     {
+        cost = 500;
         StartCoroutine(WaitForNext());
     }
 
