@@ -80,8 +80,9 @@ public class Tower : MonoBehaviour
     }
     private bool CheckSpawnPos()
     {
+        if (units[0].GetComponentInChildren<Unit>().type is UnitType.Area) return true;
         RaycastHit2D[] hits = Physics2D.RaycastAll(_spawner.transform.position, 
-            team == 1 ? Vector2.right : Vector2.left, 0.6f);
+            team == 1 ? Vector2.right : Vector2.left, units[0].GetComponent<BoxCollider2D>().size.x/2);
         foreach(var hit in hits)
         {
             Unit unit = hit.collider.gameObject.GetComponentInChildren<Unit>();

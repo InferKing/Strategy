@@ -187,4 +187,39 @@ public class Unit : MonoBehaviour
     {
         _rb.velocity = new Vector2(0, _rb.velocity.y);
     }
+    public GameObject GetParent() => _parent;
+    public int GetOppositeLayer()
+    {
+        switch (_parent.layer)
+        {
+            case 7:
+                return 9;
+            case 8: 
+                return 10;
+            case 9:
+                return 7;
+            case 10:
+                return 8;
+            default:
+                return -1;
+        }
+
+    }
+    public int[] GetLayersToIgnore(int index)
+    {
+        switch (index)
+        {
+            case 7:
+                return new int[] {8};
+            case 8:
+                return new int[] {7,8};
+            case 9:
+                return new int[] {10};
+            case 10:
+                return new int[] {9,10};
+            default:
+                return new int[] {0};
+        }
+
+    }
 }

@@ -14,6 +14,7 @@ public class RaycastUnit : MonoBehaviour
     }
     public Unit GetRaycastUnit(bool dir, float radius)
     {
+        layerMask = TotalMask(layersToIgnore);
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, dir ? Vector3.left : Vector3.right, 
             radius, ~layerMask);
         foreach (RaycastHit2D hit in hits)
@@ -77,5 +78,10 @@ public class RaycastUnit : MonoBehaviour
         int count = 0;
         foreach (int i in layersToIgnore) count += (int)Mathf.Pow(2,i);
         return count;
+    }
+    public void UpdateParams(int[] layers, int curLayer)
+    {
+        layersToIgnore = layers;
+        this.curLayer = curLayer;
     }
 }

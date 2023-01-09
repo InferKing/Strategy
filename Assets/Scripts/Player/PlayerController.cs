@@ -56,6 +56,9 @@ public class PlayerController : MonoBehaviour
             case "w":
                 _buttonController.GetMenu(1);
                 break;
+            case "e":
+                _buttonController.GetMenu(2);
+                break;
         }
     }
 }

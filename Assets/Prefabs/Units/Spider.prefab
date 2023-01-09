@@ -5472,9 +5472,9 @@ MonoBehaviour:
   radius: 0.05
   speed: 1
   curSpeed: 0
-  health: 700
+  health: 500
   damage: 30
-  maxHealth: 700
+  maxHealth: 500
   price: 500
   unlockExp: 10000
   team: 1
