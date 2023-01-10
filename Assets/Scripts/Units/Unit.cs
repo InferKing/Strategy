@@ -22,7 +22,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private Animator _animator;
     [SerializeField] private RaycastUnit _rayUnit;
-    [SerializeField] private GameObject _parent;
+    [SerializeField] protected GameObject _parent;
     [HideInInspector] public bool isDead = false;
     private Unit _enemy;
     private Tower _tower;

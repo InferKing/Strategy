@@ -15,12 +15,12 @@ public class CameraController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(Vector3.right * Time.deltaTime * speed);
             OnCameraTranslated?.Invoke(Vector3.right*Time.deltaTime*speed);
         }
-        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(Vector3.left * Time.deltaTime * speed);
             OnCameraTranslated?.Invoke(Vector3.left * Time.deltaTime * speed);
