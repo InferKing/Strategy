@@ -6,9 +6,10 @@ public class Hero : Unit
 {
     private void Start()
     {
-        StartCoroutine(test());
+        type = UnitType.Hero;
+        StartCoroutine(FixCor());
     }
-    private IEnumerator test()
+    private IEnumerator FixCor()
     {
         yield return null;
         status = UnitStatus.Stay;

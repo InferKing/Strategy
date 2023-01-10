@@ -13,7 +13,8 @@ public enum UnitType
 {
     Melee,
     Area,
-    Tower
+    Tower,
+    Hero
 }
 
 public class Unit : MonoBehaviour
