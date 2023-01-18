@@ -40,10 +40,10 @@ public class Unit : MonoBehaviour
     private void Start()
     {
         curSpeed = speed;
-        if (type is UnitType.Melee)
-        {
-            radius = _boxCollider.size.x / 2 + 0.1f;
-        }
+        //if (type is UnitType.Melee)
+        //{
+        //    radius = _boxCollider.size.x / 2 + 0.1f;
+        //}
         status = UnitStatus.Move;
         SetAnim();
         StartCoroutine(Life());
@@ -152,7 +152,7 @@ public class Unit : MonoBehaviour
                 status = UnitStatus.Attack;
                 return;
             }
-            status = UnitStatus.Move;
+            status = UnitStatus.Stay; // 1
             return;
         }
         if (unit.team != team && !unit.isDead)
@@ -173,7 +173,7 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            status = UnitStatus.Move;
+            status = UnitStatus.Stay; // 2
         }
     }
     public void SetAnim()
