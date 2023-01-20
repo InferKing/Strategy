@@ -70,6 +70,9 @@ public class ButtonController : MonoBehaviour
             case 1:
                 Instantiate(_spells[index]);
                 break;
+            case 2:
+                Instantiate(_spells[index]);
+                break;
             case 3:
                 Instantiate(_spells[index]);
                 break;

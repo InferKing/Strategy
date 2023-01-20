@@ -24,6 +24,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private RaycastUnit _rayUnit;
     [SerializeField] protected GameObject _parent;
+    [SerializeField] private bool _isMenu;
     [HideInInspector] public bool isDead = false;
     private Unit _enemy;
     private Tower _tower;
@@ -40,13 +41,21 @@ public class Unit : MonoBehaviour
     private void Start()
     {
         curSpeed = speed;
-        //if (type is UnitType.Melee)
-        //{
-        //    radius = _boxCollider.size.x / 2 + 0.1f;
-        //}
+        if (type is UnitType.Melee)
+        {
+            radius = _boxCollider.size.x / 2 + 0.1f;
+        }
         status = UnitStatus.Move;
         SetAnim();
-        StartCoroutine(Life());
+        if (!_isMenu)
+        {
+            StartCoroutine(Life());
+        }
+        else
+        {
+            status = UnitStatus.Stay;
+            SetAnim();
+        }
     }
     private IEnumerator Life()
     {
@@ -152,7 +161,7 @@ public class Unit : MonoBehaviour
                 status = UnitStatus.Attack;
                 return;
             }
-            status = UnitStatus.Stay; // 1
+            status = UnitStatus.Move; // 1
             return;
         }
         if (unit.team != team && !unit.isDead)
@@ -173,7 +182,7 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            status = UnitStatus.Stay; // 2
+            status = UnitStatus.Move; // 2
         }
     }
     public void SetAnim()
