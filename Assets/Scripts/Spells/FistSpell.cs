@@ -16,6 +16,7 @@ public class FistSpell : BaseSpell
 
     private IEnumerator WaitForNext()
     {
+        MessageText.sendMessage?.Invoke("Click on position to deal area damage");
         while (!Input.GetKeyDown(KeyCode.Mouse0))
         {
             Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);

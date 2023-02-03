@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using System;
 public enum Difficult
 {
     Easy,
@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
 
 public class Player
 {
+    public static Action PlayerXPChanged;
     protected int money, reputation, experience, towerHealth;
     public Player(int money, int reputation, int experience)
     {
@@ -85,6 +86,7 @@ public class Player
     public void AddExperience(int exp)
     {
         experience += exp;
+        PlayerXPChanged?.Invoke();
     }
     public void AddReputation(int rep)
     {

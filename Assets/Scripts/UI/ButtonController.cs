@@ -1,15 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
-
+public enum MenuType
+{
+    Spell,
+    Hero
+}
 public class ButtonController : MonoBehaviour
 {
     public static Action UpdateButtonDescriptions;
+    public static Action<MenuType, bool> MenuEnabled;
     [SerializeField] private Tower _tower;
     [SerializeField] private GameObject[] _menu;
     [SerializeField] private GameObject[] _units;
     [SerializeField] private GameObject[] _spells;
+    [SerializeField] private Button[] _spellButtons;
+    private void Start()
+    {
+        GetMenu(0);
+    }
     public void GetMenu(int index)
     {
         for (int i = 0; i < _menu.Length; i++)
@@ -21,6 +32,8 @@ public class ButtonController : MonoBehaviour
             }
         }
         if (_menu.Length > index) _menu[index].SetActive(!_menu[index].activeSelf);
+        MenuEnabled?.Invoke(index == 2 ? MenuType.Spell : MenuType.Hero,_menu[2].activeSelf);
+        Singleton.Instance.Player.AddExperience(0);
     }
     public void GetUnit(int index)
     {
@@ -66,17 +79,22 @@ public class ButtonController : MonoBehaviour
         {
             case 0:
                 Instantiate(_spells[index]);
+                _spellButtons[index].interactable = false;
                 break;
             case 1:
                 Instantiate(_spells[index]);
+                _spellButtons[index].interactable = false;
                 break;
             case 2:
                 Instantiate(_spells[index]);
+                _spellButtons[index].interactable = false;
                 break;
             case 3:
                 Instantiate(_spells[index]);
+                _spellButtons[index].interactable = false;
                 break;
         }
+        Singleton.Instance.Player.AddExperience(0);
 
     }
 }

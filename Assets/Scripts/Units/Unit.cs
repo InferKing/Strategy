@@ -86,12 +86,7 @@ public class Unit : MonoBehaviour
             }
             yield return new WaitForSeconds(Time.deltaTime);
         }
-        status = UnitStatus.Death;
-        _boxCollider.enabled = false;
-        _rb.gravityScale = 0;
-        _rb.velocity = Vector2.zero;
-        SetAnim();
-        isDead = true;
+        SetDeath();
         yield return new WaitForSeconds(1.5f);
         Destroy(_parent);
     }
@@ -99,13 +94,18 @@ public class Unit : MonoBehaviour
     {
         _rb.velocity = isLeft ? new Vector2(-1 * curSpeed, _rb.velocity.y) : new Vector2(1 * curSpeed, _rb.velocity.y);
     }
+    
     public virtual void Attack()
     {
-        if (_enemy != null && !_enemy.isDead)
+        if (_enemy != null && !_enemy.isDead && _enemy.team != team)
         {
             int _damage = (int)UnityEngine.Random.Range(damage * (1 - coefAttack), damage * (1 + coefAttack));
             _enemy.health -= _damage;
             _enemy.health = Mathf.Clamp(_enemy.health, 0, _enemy.maxHealth);
+            if (_enemy.type == UnitType.Hero)
+            {
+                _enemy.GetComponent<Hero>().UpdateStats(0);
+            }
             _enemy.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)_enemy.health / _enemy.maxHealth, 0, 1), _enemy.healthBar.transform.localScale.y, 1);
             TextController.showUnitUI?.Invoke(_enemy.gameObject, _damage);
             _enemy.particleSystem.Play();
@@ -114,6 +114,10 @@ public class Unit : MonoBehaviour
                 if (_enemy.team == 2 && !_enemy.isDead)
                 {
                     _enemy.isDead = true;
+                    if (type == UnitType.Hero)
+                    {
+                        _enemy.GetComponent<Hero>().UpdateStats(_enemy.price);
+                    }
                     Singleton.Instance.Player.TryMoneyTransaction(_enemy.price);
                     Singleton.Instance.Player.AddExperience(_enemy.price * 2);
                     Singleton.Instance.Player.AddReputation((_enemy.price / 100) + 1);
@@ -147,6 +151,15 @@ public class Unit : MonoBehaviour
                 _tower = null;
             }
         }
+    }
+    protected void SetDeath()
+    {
+        status = UnitStatus.Death;
+        _boxCollider.enabled = false;
+        _rb.gravityScale = 0;
+        _rb.velocity = Vector2.zero;
+        SetAnim();
+        isDead = true;
     }
     private void GetEnemy()
     {
