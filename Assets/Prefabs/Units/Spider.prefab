@@ -5464,6 +5464,7 @@ MonoBehaviour:
   _animator: {fileID: 6208195308708894527}
   _rayUnit: {fileID: 7543063740144708290}
   _parent: {fileID: 7106450142794868664}
+  _isMenu: 0
   isDead: 0
   particleSystem: {fileID: 6154073181415745891}
   healthBar: {fileID: 7106450142988315053}

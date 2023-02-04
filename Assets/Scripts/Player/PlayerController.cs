@@ -13,20 +13,20 @@ public enum Difficult
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Tower _tower;
-    [SerializeField] private GameObject[] _gObjs;
+    [SerializeField] private Model _model;
     [SerializeField] private ButtonController _buttonController;
     private void Update()
     {
         if (Singleton.Instance.Player.IsAlive() && Input.anyKeyDown)
         {
             int index = GetButtonIndex();
-            if (index > 0 && index <= _gObjs.Length)
+            if (index > 0 && index <= _model.GetSpellsGO().Length)
             {
-                if (Singleton.Instance.Player.GetExp() >= _gObjs[index-1].GetComponentInChildren<Unit>().unlockExp)
+                if (Singleton.Instance.Player.GetExp() >= _model.GetUnits()[index-1].unlockExp)
                 {
-                    if (Singleton.Instance.Player.TryMoneyTransaction(-_gObjs[index - 1].GetComponentInChildren<Unit>().price))
+                    if (Singleton.Instance.Player.TryMoneyTransaction(-_model.GetUnits()[index - 1].price))
                     {
-                        _tower.AddToQueue(_gObjs[index - 1]);
+                        _tower.AddToQueue(_model.GetUnitsGO()[index-1]);
                         TextController.updatePlayerUI?.Invoke();
                     }
                 }
@@ -58,6 +58,12 @@ public class PlayerController : MonoBehaviour
                 break;
             case "e":
                 _buttonController.GetMenu(2);
+                break;
+            case "r":
+                _buttonController.GetMenu(3);
+                break;
+            case "t":
+                _buttonController.GetMenu(4);
                 break;
         }
     }

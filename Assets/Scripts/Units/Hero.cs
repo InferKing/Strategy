@@ -5,6 +5,8 @@ using UnityEngine;
 public class Hero : Unit
 {
     [SerializeField] private HeroStats _stats;
+    [SerializeField] private float _healDeltaTime;
+    [SerializeField] private int _healAmount;
     public int XP { get; private set; }
     public int Level { get; private set; }
     public int MaxXP { get; private set; }
@@ -29,20 +31,30 @@ public class Hero : Unit
     private IEnumerator UserControl()
     {
         curSpeed = speed;
+        float time = 0;
         while (!isDead)
         {
+            if (time >= _healDeltaTime)
+            {
+                time = 0;
+                health += _healAmount;
+                health = Mathf.Clamp(health, 0, maxHealth);
+                healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)health / maxHealth, 0, 1), healthBar.transform.localScale.y, 1);
+            }
             Vector3 vect = _parent.transform.localScale;
             _stats.UpdateHeroUI(this);
             if (Input.GetKey(KeyCode.RightArrow))
             {
                 _parent.transform.localScale = new Vector3(Mathf.Abs(vect.x),vect.y,vect.z);
-                Move(false);
+                isLeft = false;
+                Move(isLeft);
                 status = UnitStatus.Move;
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
                 _parent.transform.localScale = new Vector3(-Mathf.Abs(vect.x),vect.y,vect.z);
-                Move(true);
+                isLeft = true;
+                Move(isLeft);
                 status = UnitStatus.Move;
             }
             else
@@ -50,6 +62,13 @@ public class Hero : Unit
                 StopMove();
                 status = UnitStatus.Stay;
             }
+            UnitStatus st = status;
+            GetEnemy();
+            if (status != UnitStatus.Attack)
+            {
+                status = st;
+            }
+            time += Time.deltaTime;
             SetAnim();
             yield return null;
         }

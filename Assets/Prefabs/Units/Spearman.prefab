@@ -5420,6 +5420,7 @@ MonoBehaviour:
   _animator: {fileID: 5467702408715538683}
   _rayUnit: {fileID: 4626037723704770348}
   _parent: {fileID: 7106450142794868664}
+  _isMenu: 0
   isDead: 0
   particleSystem: {fileID: 6823437361314723674}
   healthBar: {fileID: 7106450142988315053}

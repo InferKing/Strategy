@@ -11,11 +11,11 @@ public enum MenuType
 public class ButtonController : MonoBehaviour
 {
     public static Action UpdateButtonDescriptions;
+    public static Action<ItemDescription> UpdateButtonPrices;
     public static Action<MenuType, bool> MenuEnabled;
     [SerializeField] private Tower _tower;
     [SerializeField] private GameObject[] _menu;
-    [SerializeField] private GameObject[] _units;
-    [SerializeField] private GameObject[] _spells;
+    [SerializeField] private Model _model;
     [SerializeField] private Button[] _spellButtons;
     private void Start()
     {
@@ -37,9 +37,9 @@ public class ButtonController : MonoBehaviour
     }
     public void GetUnit(int index)
     {
-        if (Singleton.Instance.Player.TryMoneyTransaction(-_units[index].GetComponentInChildren<Unit>().price))
+        if (Singleton.Instance.Player.TryMoneyTransaction(-_model.GetUnits()[index].price))
         {
-            _tower.AddToQueue(_units[index]);
+            _tower.AddToQueue(_model.GetUnitsGO()[index]);
             TextController.updatePlayerUI?.Invoke();
         }
     }
@@ -74,27 +74,49 @@ public class ButtonController : MonoBehaviour
     }
     public void SetSpell(int index)
     {
-        if (Singleton.Instance.Player.TryMoneyTransaction(-_spells[index].GetComponentInChildren<BaseSpell>().cost))
+        if (Singleton.Instance.Player.TryMoneyTransaction(-_model.GetSpells()[index].cost))
         switch (index)
         {
             case 0:
-                Instantiate(_spells[index]);
+                Instantiate(_model.GetSpellsGO()[index]);
                 _spellButtons[index].interactable = false;
                 break;
             case 1:
-                Instantiate(_spells[index]);
+                Instantiate(_model.GetSpellsGO()[index]);
                 _spellButtons[index].interactable = false;
                 break;
             case 2:
-                Instantiate(_spells[index]);
+                Instantiate(_model.GetSpellsGO()[index]);
                 _spellButtons[index].interactable = false;
                 break;
             case 3:
-                Instantiate(_spells[index]);
+                Instantiate(_model.GetSpellsGO()[index]);
                 _spellButtons[index].interactable = false;
                 break;
         }
         Singleton.Instance.Player.AddExperience(0);
+    }
+    public void SetUpgrade(ItemDescription item)
+    {
+        if (!Singleton.Instance.Player.TryMoneyTransaction(-item.GetPrice())) return;
+        Unit[] units = _model.GetUnits();
+        for (int i = 0; i < units.Length; i++)
+        {
+            if (units[i].type == item.GetUnitType())
+            {
 
+                if (item.IsHealth())
+                {
+                    units[i].maxHealth = Mathf.RoundToInt(units[i].maxHealth * 1.1f);
+                    units[i].health = units[i].maxHealth;
+                }
+                else
+                {
+                    units[i].damage = Mathf.RoundToInt(units[i].damage * 1.2f);
+                }
+            }
+        }
+        _model.UpdateUnits(units);
+        UpdateButtonPrices?.Invoke(item);
     }
 }

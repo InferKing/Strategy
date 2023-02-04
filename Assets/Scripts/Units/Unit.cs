@@ -26,8 +26,8 @@ public class Unit : MonoBehaviour
     [SerializeField] protected GameObject _parent;
     [SerializeField] private bool _isMenu;
     [HideInInspector] public bool isDead = false;
-    private Unit _enemy;
-    private Tower _tower;
+    protected Unit _enemy;
+    protected Tower _tower;
     private float coefAttack = 0.2f;
     public ParticleSystem particleSystem;
     public GameObject healthBar;
@@ -116,7 +116,7 @@ public class Unit : MonoBehaviour
                     _enemy.isDead = true;
                     if (type == UnitType.Hero)
                     {
-                        _enemy.GetComponent<Hero>().UpdateStats(_enemy.price);
+                        GetComponent<Hero>().UpdateStats(_enemy.price);
                     }
                     Singleton.Instance.Player.TryMoneyTransaction(_enemy.price);
                     Singleton.Instance.Player.AddExperience(_enemy.price * 2);
@@ -161,7 +161,7 @@ public class Unit : MonoBehaviour
         SetAnim();
         isDead = true;
     }
-    private void GetEnemy()
+    protected void GetEnemy()
     {
         Unit unit = _rayUnit.GetRaycastUnit(isLeft, radius);
         Tower tower = _rayUnit.GetRaycastTower(isLeft,radius, type);
@@ -174,7 +174,7 @@ public class Unit : MonoBehaviour
                 status = UnitStatus.Attack;
                 return;
             }
-            status = UnitStatus.Move; // 1
+            status = UnitStatus.Move; 
             return;
         }
         if (unit.team != team && !unit.isDead)
@@ -195,7 +195,7 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            status = UnitStatus.Move; // 2
+            status = UnitStatus.Move; 
         }
     }
     public void SetAnim()

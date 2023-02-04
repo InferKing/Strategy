@@ -6,13 +6,28 @@ public class ContextDescription : MonoBehaviour
 {
     [SerializeField] private GameObject _description;
     [SerializeField] private TMP_Text _descr1, _descr2;
-    [SerializeField] private GameObject _gObj;
+    [SerializeField] private Model _model;
+    [SerializeField] private int _index;
     private Unit _unit;
-    private void Start()
+    private bool _active = false;
+    private void OnEnable()
     {
-        _unit = _gObj.GetComponentInChildren<Unit>();
+        if (_active) ShowInfo();
+    }
+    private void OnDisable()
+    {
+        if (_active) ShowInfo();
+    }
+    private void ShowInfo()
+    {
+        _unit = _model.GetUnits()[_index];
         _descr1.text = $"Price: {_unit.price}\nDamage: {_unit.damage}";
         _descr2.text = $"HP: {_unit.maxHealth}";
+    }
+    private void Start()
+    {
+        _active = true;
+        ShowInfo();
     }
     public void OnPointerEnter()
     {
