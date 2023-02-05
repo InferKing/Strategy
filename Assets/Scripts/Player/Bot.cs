@@ -15,9 +15,11 @@ public class Bot : MonoBehaviour
     [SerializeField] private StateDeterminer _stateDeterminer;
     [SerializeField] private GameObject[] _units;
     private BotState _state;
-    // public Difficult difficult { private get; set; }
+    public Difficult difficult { private get; set; }
     private void Start()
     {
+        difficult = (Difficult)PlayerPrefs.GetInt("Difficult");
+        Debug.Log($"Difficult is {difficult}");
         _state = BotState.AttackMelee;
         StartCoroutine(Life());
     }

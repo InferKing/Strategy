@@ -7,11 +7,6 @@ public class MainController : MonoBehaviour
 {
     public static int currentUnits;
     [SerializeField] private Tower[] _tower;
-    [SerializeField] private TransitionScenes _transit;
-    private void Awake()
-    {
-        _transit.StartCor("");
-    }
     private void Start()
     {
         currentUnits = 0;

@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 215695510}
   - component: {fileID: 215695509}
   m_Layer: 0
-  m_Name: b3753bc822fd85eed9cfd54f14e3a8df
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1649,7 +1649,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: MainGame
+          m_StringArgument: Menu 2
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1074068779
@@ -2247,7 +2247,7 @@ GameObject:
   - component: {fileID: 2002095742}
   - component: {fileID: 2002095744}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Transition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
