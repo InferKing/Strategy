@@ -19088,11 +19088,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3f5e9423df5d6a04fbce613ffba8195a, type: 3}
   - {fileID: 21300000, guid: ea69d94846293864ea0cea775731f112, type: 3}
   - {fileID: 21300000, guid: 90ff28be2b30d6c4882fc8d1f1f191b9, type: 3}
-  _gObjs:
-  - {fileID: 7106450142794868664, guid: d7ef064eb139f0041a448bd52ee98966, type: 3}
-  - {fileID: 7106450142794868664, guid: 41897b3603265dc4d93bb5ff6ab030cc, type: 3}
-  - {fileID: 7106450142794868664, guid: a32abece2a295184082dafcf2f59a5bd, type: 3}
-  - {fileID: 7106450142794868664, guid: fe3a9a975ecd8bc4386cd5ccc4f5b3fb, type: 3}
+  _model: {fileID: 1000908620}
 --- !u!1 &679916425
 GameObject:
   m_ObjectHideFlags: 0
