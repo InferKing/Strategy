@@ -30,15 +30,15 @@ public class ItemDescription : BaseDescription
         if (item != this) return;
         if (IsItLimit())
         {
-            MessageText.sendMessage?.Invoke("Limit reached!");
+            MessageText.sendMessage?.Invoke(Constants.LimitReached);
             _button.interactable = false;
             return;
         }
         _count += 1;
         _price *= _multiplier;
         _priceText.text = "Price: " + _price.ToString();
-        if (_isHealth) MessageText.sendMessage?.Invoke("Health increased!");
-        else MessageText.sendMessage?.Invoke("Attack damage increased!");
+        if (_isHealth) MessageText.sendMessage?.Invoke(Constants.HealthIncreased);
+        else MessageText.sendMessage?.Invoke(Constants.AttackIncreased);
     }
     public bool IsItLimit() => _count >= _limitCount-1;
     public int GetPrice() => _price;

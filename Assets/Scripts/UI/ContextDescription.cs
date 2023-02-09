@@ -21,8 +21,8 @@ public class ContextDescription : MonoBehaviour
     private void ShowInfo()
     {
         _unit = _model.GetUnits()[_index];
-        _descr1.text = $"Price: {_unit.price}\nDamage: {_unit.damage}";
-        _descr2.text = $"HP: {_unit.maxHealth}";
+        _descr1.text = $"Price: {_unit.price}\nDamage: {_unit.GetStats()[0]}";
+        _descr2.text = $"HP: {_unit.GetStats()[1]}";
     }
     private void Start()
     {

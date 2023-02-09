@@ -52,6 +52,7 @@ public class BlockSprite : MonoBehaviour
             _once = true;
             _button.interactable = true;
             _image.sprite = _sprite;
+            MessageText.sendMessage?.Invoke(Constants.UnitUnlocked);
         }
     }
     private void TryDelayInteract()
@@ -79,7 +80,7 @@ public class BlockSprite : MonoBehaviour
         _slider.gameObject.SetActive(false);
         _button.interactable = true;
         _enabled = false;
-        MessageText.sendMessage?.Invoke("Spell is ready for use!");
+        MessageText.sendMessage?.Invoke(Constants.SpellIsReady);
     }
     private void SetUI(MenuType type, bool enabled)
     {

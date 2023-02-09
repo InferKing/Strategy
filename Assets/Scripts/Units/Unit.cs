@@ -37,9 +37,22 @@ public class Unit : MonoBehaviour
     public int health, damage, maxHealth, price, unlockExp; // team should be 1 or 2
     [Range(1, 2)] public int team;
     public bool isLeft;
-
+    private float coefHP, coefAT;
     private void Start()
     {
+        List<float> list = new List<float>();
+        if (team == 1)
+        {
+            UpgradeStats.bonuses.TryGetValue(type, out list);
+        }
+        else
+        {
+            UpgradeStats.bonusesEnemy.TryGetValue(type, out list);
+        }
+        coefAT = list[0];
+        coefHP = list[1];
+        maxHealth = Mathf.RoundToInt(maxHealth * coefHP);
+        health = maxHealth;
         curSpeed = speed;
         if (type is UnitType.Melee)
         {
@@ -99,7 +112,8 @@ public class Unit : MonoBehaviour
     {
         if (_enemy != null && !_enemy.isDead && _enemy.team != team)
         {
-            int _damage = (int)UnityEngine.Random.Range(damage * (1 - coefAttack), damage * (1 + coefAttack));
+            int _damage = Mathf.RoundToInt(UnityEngine.Random.Range((damage * coefAT) * (1 - coefAttack), 
+                (damage * coefAT) * (1 + coefAttack)) * coefAT);
             _enemy.health -= _damage;
             _enemy.health = Mathf.Clamp(_enemy.health, 0, _enemy.maxHealth);
             if (_enemy.type == UnitType.Hero)
@@ -197,6 +211,15 @@ public class Unit : MonoBehaviour
         {
             status = UnitStatus.Move; 
         }
+    }
+    public int[] GetStats() // 0 is damage, 1 is health
+    {
+        int[] stats = new int[2];
+        List<float> list = new List<float>();
+        UpgradeStats.bonuses.TryGetValue(type, out list);
+        stats[0] = Mathf.RoundToInt(damage * list[0]);
+        stats[1] = Mathf.RoundToInt(maxHealth * list[1]);
+        return stats;
     }
     public void SetAnim()
     {

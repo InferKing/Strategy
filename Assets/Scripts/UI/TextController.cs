@@ -8,18 +8,20 @@ public class TextController : MonoBehaviour
 {
     [SerializeField] private TMP_Text _money, _rep, _exp;
     [SerializeField] private TMP_Text[] _texts;
-    [SerializeField] private TMP_Text _textUser;
+    [SerializeField] private TMP_Text _finishText;
     public static Action<GameObject, int> showUnitUI;
     public static Action updatePlayerUI;
     private void OnEnable()
     {
         showUnitUI += ShowDamageUI;
         updatePlayerUI += UpdateUI;
+        MainController.ShowFinish += SetFinishTitle;
     }
     private void OnDisable()
     {
         showUnitUI -= ShowDamageUI;
         updatePlayerUI -= UpdateUI;
+        MainController.ShowFinish -= SetFinishTitle;
     }
 
     private void UpdateUI()
@@ -60,5 +62,11 @@ public class TextController : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
         }
         unit.SetActive(false);
+    }
+    private void SetFinishTitle(int x, string s)
+    {
+        bool b = Constants.Congratulations.Contains(s);
+        if (b) _finishText.text = "Victory!";
+        else _finishText.text = "Defeat";
     }
 }

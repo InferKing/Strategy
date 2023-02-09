@@ -100,23 +100,16 @@ public class ButtonController : MonoBehaviour
     {
         if (!Singleton.Instance.Player.TryMoneyTransaction(-item.GetPrice())) return;
         Unit[] units = _model.GetUnits();
-        for (int i = 0; i < units.Length; i++)
+        List<float> list = new List<float>();
+        UpgradeStats.bonuses.TryGetValue(item.GetUnitType(), out list);
+        if (item.IsHealth())
         {
-            if (units[i].type == item.GetUnitType())
-            {
-
-                if (item.IsHealth())
-                {
-                    units[i].maxHealth = Mathf.RoundToInt(units[i].maxHealth * 1.1f);
-                    units[i].health = units[i].maxHealth;
-                }
-                else
-                {
-                    units[i].damage = Mathf.RoundToInt(units[i].damage * 1.2f);
-                }
-            }
+            list[1] += 0.1f;
         }
-        _model.UpdateUnits(units);
+        else
+        {
+            list[0] += 0.2f;
+        }
         UpdateButtonPrices?.Invoke(item);
     }
 }
