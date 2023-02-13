@@ -6,37 +6,29 @@ public class Cannon : MonoBehaviour
 {
     [SerializeField] private Tower _myTower;
     [SerializeField] private Animator _animator;
-    private Unit _unit;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private RaycastUnit _raycastUnit;
+    private Unit _unit = null;
     private void Update()
     {
         _animator.speed = _myTower.GetTurretSpeed();
-        GetUnit();
-    }
-    private void GetUnit()
-    {
-        if (Singleton.Instance.Player.IsAlive())
+        List<Unit> units = _raycastUnit.GetRaycastUnitAll(transform.position, _myTower.team == 2 ? Vector2.left : Vector2.right, _myTower.GetTurretRadius());
+        foreach (var unit in units)
         {
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, _myTower.team == 1 ? Vector2.right : Vector2.left, _myTower.GetTurretRadius());
-            for(int i = hits.Length-1; i >= 0; i--)
+            if (unit.team != _myTower.team && !unit.isDead)
             {
-                if (hits[i].collider != null)
-                {
-                    Unit unit = null;
-                    unit = hits[i].collider.gameObject.GetComponentInChildren<Unit>();
-                    if (unit != null && !unit.isDead && unit.team != _myTower.team)
-                    {
-                        _unit = unit;
-                    }
-                }
+                _unit = unit;
+                break;
             }
-            _animator.SetBool("Attack", _unit != null && hits.Length > 1);
         }
-        
+        _animator.SetBool("Attack", _unit != null);
     }
+    
     public void Attack() 
     {
-        if (_unit != null)
+        if (_unit != null && !_unit.isDead)
         {
+            _audioSource.Play();
             int _damage = (int)Random.Range(_myTower.GetTurretDamage() * 0.8f, _myTower.GetTurretDamage() * 1.2f);
             _unit.health -= _damage;
             _unit.health = Mathf.Clamp(_unit.health, 0, _unit.maxHealth);

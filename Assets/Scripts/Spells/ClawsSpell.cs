@@ -7,7 +7,7 @@ public class ClawsSpell : BaseSpell
     [SerializeField] private GameObject _parent;
     [SerializeField] private Animator _animator;
     [SerializeField] private RaycastUnit _raycastUnit;
-    [SerializeField] private int _team;
+    private Vector2 _vect;
     void Start()
     {
         cost = 1500;
@@ -16,16 +16,20 @@ public class ClawsSpell : BaseSpell
 
     private IEnumerator WaitForNext()
     {
-        MessageText.sendMessage?.Invoke("Click on position to kill unit");
-        while (!Input.GetKeyDown(KeyCode.Mouse0))
+        if (team == 1)
         {
-            Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _parent.transform.position = new Vector3(v.x, 10.5f, _parent.transform.position.z);
-            yield return null;
+            MessageText.sendMessage?.Invoke("Click on position to kill unit");
+            while (!Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                _parent.transform.position = new Vector3(v.x, 10.5f, _parent.transform.position.z);
+                yield return null;
+            }
+            _vect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
+        yield return new WaitForSeconds(Time.deltaTime);
         _animator.SetBool("Attack", true);
-        Vector2 vect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        _enemies = _raycastUnit.GetOverlapUnitAll(new Vector2(vect.x - 0.3f, vect.y), new Vector2(vect.x + 0.3f, vect.y - 20), _team);
+        _enemies = _raycastUnit.GetOverlapUnitAll(new Vector2(_vect.x - 0.3f, _vect.y), new Vector2(_vect.x + 0.3f, _vect.y - 20), team);
     }
     public void KillEnemy()
     {
@@ -34,5 +38,9 @@ public class ClawsSpell : BaseSpell
             damage = _enemies[0].maxHealth;
             Attack(_enemies[0]);
         }
+    }
+    public void SetPositionX(int x)
+    {
+        _parent.transform.position = new Vector3(x, 10.5f, _parent.transform.position.z);
     }
 }

@@ -30,14 +30,13 @@ public class MainController : MonoBehaviour
         StopCoroutine(StartAddMoney());
         yield return new WaitForSeconds(3);
         _finishUI.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
         if (_tower[0].health > 0)
         {
-            ShowFinish?.Invoke(4, Constants.Congratulations[UnityEngine.Random.Range(0, Constants.Congratulations.Count)]);
+            ShowFinish?.Invoke(12, Constants.Congratulations[UnityEngine.Random.Range(0, Constants.Congratulations.Count)]);
         }
         else
         {
-            ShowFinish?.Invoke(4, Constants.Lose[UnityEngine.Random.Range(0, Constants.Lose.Count)]);
+            ShowFinish?.Invoke(12, Constants.Lose[UnityEngine.Random.Range(0, Constants.Lose.Count)]);
         }
     }
 

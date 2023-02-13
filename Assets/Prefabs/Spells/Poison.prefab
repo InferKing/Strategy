@@ -4818,7 +4818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f921a475d739aa49aa44e91f3a7c2f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _team: 1
+  cost: 500
+  team: 1
   _raycastUnit: {fileID: 2662385882271874597}
   _particleSystem: {fileID: 2662385882271874595}
 --- !u!114 &2662385882271874597

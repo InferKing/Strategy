@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 1500
+  team: 1
   _parent: {fileID: 3383231089676640770}
   _animator: {fileID: 4022583450771238756}
   _raycastUnit: {fileID: 8396179750362135917}
-  _team: 1

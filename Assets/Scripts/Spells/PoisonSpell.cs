@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class PoisonSpell : BaseSpell
 {
-    [SerializeField] private int _team;
     [SerializeField] private RaycastUnit _raycastUnit;
     [SerializeField] private ParticleSystem _particleSystem;
-
+    private Vector2 _vect;
     private void Start()
     {
         cost = 800;
@@ -16,21 +15,23 @@ public class PoisonSpell : BaseSpell
     }
     private IEnumerator StartPoison()
     {
-        MessageText.sendMessage?.Invoke("Click on position to use poison");
-        while (!Input.GetKeyDown(KeyCode.Mouse0))
+        if (team == 1)
         {
-            Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(v.x, 13.5f, transform.position.z);
-            yield return null;
+            MessageText.sendMessage?.Invoke("Click on position to use poison");
+            while (!Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                yield return null;
+            }
+            _vect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
+        yield return new WaitForSeconds(Time.deltaTime);
+        transform.position = new Vector3(_vect.x, 6f, transform.position.z);
         _particleSystem.Play();
-        Vector2 vect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector2(vect.x, 6f);
         List<Unit> units = new List<Unit>();
         for (int i = 0; i < 17; i++)
         {
             yield return new WaitForSeconds(1f);
-            List<Unit> t = _raycastUnit.GetOverlapUnitAll(new Vector2(vect.x - 4f, vect.y), new Vector2(vect.x + 4f, vect.y - 20), _team);
+            List<Unit> t = _raycastUnit.GetOverlapUnitAll(new Vector2(_vect.x - 4f, _vect.y + 20), new Vector2(_vect.x + 4f, _vect.y - 20), team);
             foreach (var unit in t)
             {
                 if (!units.Contains(unit))
@@ -67,5 +68,9 @@ public class PoisonSpell : BaseSpell
             }
         }
         return t;
+    }
+    public void SetPosX(float x)
+    {
+        _vect = new Vector2(x, 6f);
     }
 }

@@ -8,6 +8,8 @@ public class BaseSpell : MonoBehaviour
     protected int damage = 100;
     protected float coefAttack = 0;
     protected List<Unit> _enemies = new List<Unit>();
+    [SerializeField] protected int team;
+    [SerializeField] private AudioSource _audioSource;
 
     protected virtual void Attack(Unit _enemy)
     {
@@ -45,6 +47,18 @@ public class BaseSpell : MonoBehaviour
         foreach (Unit unit in _enemies)
         {
             Attack(unit);
+        }
+    }
+    public int GetTeam() => team;
+    public void SetTeam(int x)
+    {
+        team = x;
+    }
+    public void PlaySound()
+    {
+        if (_audioSource != null)
+        {
+            _audioSource.Play();
         }
     }
 }

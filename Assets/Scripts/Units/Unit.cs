@@ -40,7 +40,7 @@ public class Unit : MonoBehaviour
     private float coefHP, coefAT;
     private void Start()
     {
-        List<float> list = new List<float>();
+        List<float> list = new List<float>() { 1f,1f};
         if (team == 1)
         {
             UpgradeStats.bonuses.TryGetValue(type, out list);
@@ -49,6 +49,7 @@ public class Unit : MonoBehaviour
         {
             UpgradeStats.bonusesEnemy.TryGetValue(type, out list);
         }
+        if (list == null) list = new List<float>() { 1f, 1f };
         coefAT = list[0];
         coefHP = list[1];
         maxHealth = Mathf.RoundToInt(maxHealth * coefHP);

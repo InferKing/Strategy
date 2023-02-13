@@ -14,40 +14,70 @@ public class Bot : MonoBehaviour
     [SerializeField] private Tower _tower;
     [SerializeField] private StateDeterminer _stateDeterminer;
     [SerializeField] private GameObject[] _units;
-    private BotState _state;
+    [SerializeField] private LevelToUnits _levelToUnits;
+    [SerializeField] private Model _model;
+    private List<int> _timeToSpell;
     public Difficult difficult { private get; set; }
     private void Start()
     {
+        _timeToSpell = new List<int>() { 35,75};
         difficult = (Difficult)PlayerPrefs.GetInt("Difficult");
         Debug.Log($"Difficult is {difficult}");
-        _state = BotState.AttackMelee;
         StartCoroutine(Life());
+        StartCoroutine(UsingSpell());
+    }
+    private IEnumerator UsingSpell()
+    {
+        List<float> sm = new List<float> { 0, 0 };
+        Vector3 vector = Vector3.zero;
+        while(_tower.health > 0)
+        {
+            for (int i = 0; i < sm.Count; i++)
+            {
+                sm[i] += Time.deltaTime;
+                if (sm[i] > _timeToSpell[i])
+                {
+                    sm[i] -= _timeToSpell[i];
+                    vector = _stateDeterminer.GetEnemyCrowdPos();
+                    if (vector != Vector3.zero)
+                    {
+                        GameObject spell = Instantiate(_model.GetSpellsGO()[i]);
+                        switch (i)
+                        {
+                            case 0:
+                                FistSpell f = spell.GetComponentInChildren<FistSpell>();
+                                f.SetTeam(2);
+                                f.SetPositionX(vector.x);
+                                break;
+                            case 1:
+                                PoisonSpell p = spell.GetComponentInChildren<PoisonSpell>();
+                                p.SetTeam(2);
+                                p.SetPosX(vector.x);
+                                break;
+                        }
+                    }
+                }
+            }
+            
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
     }
 
     private IEnumerator Life()
     {
-        while (_tower.health != 0)
+        DataJson data = _levelToUnits.GetQueueUnits(difficult);
+        int count = 0;
+        while (_tower.health > 0)
         {
-            _state = _stateDeterminer.GetState();
-            switch (_state)
+            count = Mathf.Clamp(count, 0, data.listUnits.Count-1);
+            foreach(var item in data.listUnits[count])
             {
-                case BotState.AttackRange:
-                    for (int i = 0; i < 5; i++) _tower.AddToQueue(_units[0]);
-                    for (int i = 0; i < 5; i++) _tower.AddToQueue(_units[1]);
-                    break;
-                case BotState.DefenseRange:
-                    for (int i = 0; i < 3; i++) _tower.AddToQueue(_units[0]);
-                    for (int i = 0; i < 10; i++) _tower.AddToQueue(_units[1]);
-                    break;
-                case BotState.AttackMelee:
-                    for (int i = 0; i < 7; i++) _tower.AddToQueue(_units[0]);
-                    for (int i = 0; i < 3; i++) _tower.AddToQueue(_units[1]);
-                    break;
-                case BotState.DefenseMelee:
-                    for (int i = 0; i < 10; i++) _tower.AddToQueue(_units[0]);
-                    for (int i = 0; i < 3; i++) _tower.AddToQueue(_units[1]);
-                    break;
+                for (int i = 0; i < item.Value; i++)
+                {
+                    _tower.AddToQueue(_units[item.Key]);
+                }
             }
+            count++;
             yield return StartCoroutine(SpawnUnit());
             yield return new WaitForSeconds(20);
         }
