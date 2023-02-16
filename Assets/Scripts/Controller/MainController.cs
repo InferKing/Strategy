@@ -30,7 +30,7 @@ public class MainController : MonoBehaviour
         StopCoroutine(StartAddMoney());
         yield return new WaitForSeconds(3);
         _finishUI.SetActive(true);
-        if (_tower[0].health > 0)
+        if (_tower[0].health > 0.01f * _tower[0].maxHealth)
         {
             ShowFinish?.Invoke(12, Constants.Congratulations[UnityEngine.Random.Range(0, Constants.Congratulations.Count)]);
         }

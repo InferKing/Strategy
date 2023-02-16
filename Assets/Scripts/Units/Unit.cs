@@ -37,10 +37,10 @@ public class Unit : MonoBehaviour
     public int health, damage, maxHealth, price, unlockExp; // team should be 1 or 2
     [Range(1, 2)] public int team;
     public bool isLeft;
-    private float coefHP, coefAT;
+    protected float coefHP, coefAT;
     private void Start()
     {
-        List<float> list = new List<float>() { 1f,1f};
+        List<float> list;
         if (team == 1)
         {
             UpgradeStats.bonuses.TryGetValue(type, out list);
@@ -49,7 +49,7 @@ public class Unit : MonoBehaviour
         {
             UpgradeStats.bonusesEnemy.TryGetValue(type, out list);
         }
-        if (list == null) list = new List<float>() { 1f, 1f };
+        if (list == null || list.Count == 0) list = new List<float>() { 1f,1f};
         coefAT = list[0];
         coefHP = list[1];
         maxHealth = Mathf.RoundToInt(maxHealth * coefHP);
@@ -140,7 +140,7 @@ public class Unit : MonoBehaviour
                 else if (_enemy.team == 1 && !_enemy.isDead)
                 {
                     _enemy.isDead = true;
-                    MainController.currentUnits -= 1;
+                    if (_enemy.type != UnitType.Hero) MainController.currentUnits -= 1;
                     TextController.updatePlayerUI?.Invoke();
                 }
                 TextController.updatePlayerUI?.Invoke();

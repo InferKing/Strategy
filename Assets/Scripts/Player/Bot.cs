@@ -14,7 +14,6 @@ public class Bot : MonoBehaviour
     [SerializeField] private Tower _tower;
     [SerializeField] private StateDeterminer _stateDeterminer;
     [SerializeField] private GameObject[] _units;
-    [SerializeField] private LevelToUnits _levelToUnits;
     [SerializeField] private Model _model;
     private List<int> _timeToSpell;
     public Difficult difficult { private get; set; }
@@ -65,12 +64,11 @@ public class Bot : MonoBehaviour
 
     private IEnumerator Life()
     {
-        DataJson data = _levelToUnits.GetQueueUnits(difficult);
         int count = 0;
         while (_tower.health > 0)
         {
-            count = Mathf.Clamp(count, 0, data.listUnits.Count-1);
-            foreach(var item in data.listUnits[count])
+            count = Mathf.Clamp(count, 0, DataQueue.listUnits[difficult].Count-1);
+            foreach(var item in DataQueue.listUnits[difficult][count])
             {
                 for (int i = 0; i < item.Value; i++)
                 {

@@ -6,12 +6,17 @@ public class TransitionScenes : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private float[] _params;
+    [SerializeField] private bool _withFade;
     private bool _active = false;
     public void StartCor(string scene)
     {
-        if (!_active)
+        if (!_active && scene.Length > 0 && _withFade)
         {
             StartCoroutine(TransScene(scene));
+        }
+        else if (!_withFade && scene.Length > 0 && !_active && scene != "null")
+        {
+            SceneManager.StartScene(scene);
         }
     }
     private IEnumerator TransScene(string scene)
@@ -35,7 +40,7 @@ public class TransitionScenes : MonoBehaviour
                 _sprite.color = new Color(_sprite.color.r, _sprite.color.g, _sprite.color.b, i);
                 yield return null;
             }
-            SceneManager.StartScene(scene);
+            if (scene != "null") SceneManager.StartScene(scene);
         }
         _active = false;
         yield return null;

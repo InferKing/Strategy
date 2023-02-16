@@ -21,7 +21,8 @@ public class Cannon : MonoBehaviour
                 break;
             }
         }
-        _animator.SetBool("Attack", _unit != null);
+        _animator.SetBool("Attack", _unit != null && _myTower.GetTurretRadius() >= 
+            (_myTower.gameObject.transform.position-_unit.gameObject.transform.position).magnitude);
     }
     
     public void Attack() 

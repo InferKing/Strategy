@@ -12,6 +12,7 @@ public class Hero : Unit
     public int MaxXP { get; private set; }
     private void Start()
     {
+        coefAT = 1f;
         XP = 0;
         Level = 1;
         MaxXP = 500;
@@ -93,7 +94,7 @@ public class Hero : Unit
             maxHealth = 500 + (Level - 1) * 250;
             health += 250;
             damage = Mathf.RoundToInt(damage * 1.2f);
-            MessageText.sendMessage?.Invoke("New hero level!");
+            MessageText.sendMessage?.Invoke(Constants.HeroLvlUp);
         }
     }
 

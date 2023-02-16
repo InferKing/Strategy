@@ -8,13 +8,13 @@ public class Singleton : MonoBehaviour
     public Player Player { get; private set; }
     private void Awake()
     {
-        Player = new Player(50000,100,3999);
+        Player = new Player(500,0,0);
         if (Instance != null && Instance != this)
         {
             Destroy(this);
             return;
         }
         Instance = this;
-        Player = new Player(50000, 100, 3999);
+        Player = new Player(500, 0, 0);
     }
 }

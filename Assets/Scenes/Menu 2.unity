@@ -569,6 +569,7 @@ MonoBehaviour:
   - 0
   - 1
   - 0.015
+  _withFade: 1
 --- !u!4 &123434939
 Transform:
   m_ObjectHideFlags: 0
@@ -18173,6 +18174,7 @@ MonoBehaviour:
   - 1
   - 0
   - 0.015
+  _withFade: 0
 --- !u!1 &2067309533
 GameObject:
   m_ObjectHideFlags: 0

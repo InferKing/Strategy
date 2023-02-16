@@ -5,14 +5,16 @@ using TMPro;
 using System;
 public static class Constants
 {
+    public static string pathSettings = Application.persistentDataPath + "/settings.json";
     public const string UnitUnlocked = "New unit unlocked!";
     public const string SpellIsReady = "Spell is ready for use!";
     public const string HealthIncreased = "Health increased!";
     public const string AttackIncreased = "Attack damage increased!";
     public const string LimitReached = "Limit reached!";
+    public const string HeroLvlUp = "New hero level!";
     public static List<string> Messages = new List<string>()
     {
-        UnitUnlocked, SpellIsReady, HealthIncreased, AttackIncreased, LimitReached
+        UnitUnlocked, SpellIsReady, HealthIncreased, AttackIncreased, LimitReached, HeroLvlUp
     };
     public static List<string> Congratulations = new List<string>()
     {
