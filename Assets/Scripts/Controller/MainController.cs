@@ -8,7 +8,7 @@ public class MainController : MonoBehaviour
     public static Action<int, string> ShowFinish;
     public static int currentUnits;
     [SerializeField] private Tower[] _tower;
-    [SerializeField] private GameObject _finishUI;
+    [SerializeField] private Animator _finishUIAnim;
     private void Awake()
     {
         MusicTrans music = FindObjectOfType<MusicTrans>();
@@ -29,7 +29,7 @@ public class MainController : MonoBehaviour
         }
         StopCoroutine(StartAddMoney());
         yield return new WaitForSeconds(3);
-        _finishUI.SetActive(true);
+        _finishUIAnim.SetBool("Idle", true);
         if (_tower[0].health > 0.01f * _tower[0].maxHealth)
         {
             ShowFinish?.Invoke(12, Constants.Congratulations[UnityEngine.Random.Range(0, Constants.Congratulations.Count)]);
