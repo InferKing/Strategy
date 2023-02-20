@@ -12,9 +12,35 @@ public static class Constants
     public const string AttackIncreased = "Attack damage increased!";
     public const string LimitReached = "Limit reached!";
     public const string HeroLvlUp = "New hero level!";
+    public const string NoMoney = "Not enough money!";
     public static List<string> Messages = new List<string>()
     {
-        UnitUnlocked, SpellIsReady, HealthIncreased, AttackIncreased, LimitReached, HeroLvlUp
+        UnitUnlocked, SpellIsReady, HealthIncreased, AttackIncreased, LimitReached, HeroLvlUp, NoMoney
+    };
+    public static List<string> PauseText = new List<string>()
+    {
+        "I get tired sometimes, too.",
+        "Write to the developer with your impressions of the game. It's important to him!",
+        "Are they interfering with the game again? I see.",
+        "Don't waste your time. Destroy this bot, you can do it!",
+        "Someday the developer will learn how to balance the game.",
+        "How do you feel?",
+        "Click on the bot's nose and you'll see the Easter egg! Oh... He doesn't have a nose.",
+        "Call your grandmother, she'll be pleased.",
+        "Don't forget to brush your teeth at night!",
+        "I'm tired of coming up with messages to the player... Let me out of the basement!",
+        "How much longer will the bot attack you?!",
+        "Use spells, they are very useful in most cases.",
+        "To win you need to destroy the bot tower , not your own :)",
+        "I heard somewhere that you can improve your troops.",
+        "Improving the cannon is just as important as improving the troops.",
+        "Life advice: don't trust anyone, even me.",
+        "You can change the volume level in the settings.",
+        "There's only one Easter egg in the game, can you find it?",
+        "I developed my first game when I was 15 years old. No one played it, though.",
+        "How often do you tell your family that you love them?",
+        "2 + 2 is not equal to 5",
+        "I hate broccoli."
     };
     public static List<string> Congratulations = new List<string>()
     {

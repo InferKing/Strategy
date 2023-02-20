@@ -8,13 +8,25 @@ public class Singleton : MonoBehaviour
     public Player Player { get; private set; }
     private void Awake()
     {
-        Player = new Player(500,0,0);
         if (Instance != null && Instance != this)
         {
             Destroy(this);
             return;
         }
         Instance = this;
-        Player = new Player(500, 0, 0);
+        Difficult difficult = (Difficult)PlayerPrefs.GetInt("Difficult");
+        switch (difficult)
+        {
+            case Difficult.Easy:
+                Player = new Player(750, 100, 1500);
+                break;
+            case Difficult.Medium:
+                Player = new Player(500, 50, 0);
+                break;
+            case Difficult.Hard:
+                Player = new Player(350, 0, 0);
+                break;
+        }
+        
     }
 }

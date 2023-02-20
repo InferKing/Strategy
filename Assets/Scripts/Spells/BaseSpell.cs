@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class BaseSpell : MonoBehaviour
 {
+    public int xp;
     public int cost = 500;
     protected int damage = 100;
     protected float coefAttack = 0;
     protected List<Unit> _enemies = new List<Unit>();
     [SerializeField] protected int team;
     [SerializeField] private AudioSource _audioSource;
+    
 
     protected virtual void Attack(Unit _enemy)
     {

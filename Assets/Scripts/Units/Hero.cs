@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Hero : Unit
 {
     [SerializeField] private HeroStats _stats;
     [SerializeField] private float _healDeltaTime;
     [SerializeField] private int _healAmount;
+    private float _eps = 0.05f;
+    private Coroutine _cor;
+    private bool _enabled = false;
     public int XP { get; private set; }
     public int Level { get; private set; }
     public int MaxXP { get; private set; }
@@ -29,6 +33,20 @@ public class Hero : Unit
         StopAllCoroutines();
         yield return StartCoroutine(UserControl());
     }
+    private IEnumerator GoTo()
+    {
+        _enabled = false;
+        Vector2 vect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        status = UnitStatus.Move;
+        while (Mathf.Abs(vect.x-transform.position.x) > _eps)
+        {
+            SetDest(vect.x > _parent.transform.position.x);
+            yield return null;
+        }
+        StopMove();
+        status = UnitStatus.Stay;
+        _enabled = true;
+    }
     private IEnumerator UserControl()
     {
         curSpeed = speed;
@@ -42,35 +60,17 @@ public class Hero : Unit
                 health = Mathf.Clamp(health, 0, maxHealth);
                 healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)health / maxHealth, 0, 1), healthBar.transform.localScale.y, 1);
             }
-            Vector3 vect = _parent.transform.localScale;
-            _stats.UpdateHeroUI(this);
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (!EventSystem.current.IsPointerOverGameObject() && Input.GetKeyDown(KeyCode.Mouse0))
             {
-                _parent.transform.localScale = new Vector3(Mathf.Abs(vect.x),vect.y,vect.z);
-                isLeft = false;
-                Move(isLeft);
-                status = UnitStatus.Move;
+                if (_cor != null) StopCoroutine(_cor);
+                _enabled = false;
+                _cor = StartCoroutine(GoTo());
             }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                _parent.transform.localScale = new Vector3(-Mathf.Abs(vect.x),vect.y,vect.z);
-                isLeft = true;
-                Move(isLeft);
-                status = UnitStatus.Move;
-            }
-            else
-            {
-                StopMove();
-                status = UnitStatus.Stay;
-            }
-            UnitStatus st = status;
             GetEnemy();
-            if (status != UnitStatus.Attack)
-            {
-                status = st;
-            }
+            if (_enabled && status != UnitStatus.Attack) status = UnitStatus.Stay;
             time += Time.deltaTime;
             SetAnim();
+            _stats.UpdateHeroUI(this);
             yield return null;
         }
         SetDeath();
@@ -83,6 +83,17 @@ public class Hero : Unit
         XP += Mathf.RoundToInt(cost / 2);
         UpdateLevelAndHealth();
         _stats.UpdateHeroUI(this);
+    }
+    private void SetDest(bool b)
+    {
+        Vector3 vect = _parent.transform.localScale;
+        _parent.transform.localScale = new Vector3(Mathf.Abs(vect.x) * (isLeft ? -1 : 1), vect.y, vect.z);
+        if (b)
+        {
+            isLeft = false;
+        }
+        else isLeft = true;
+        Move(isLeft);
     }
     private void UpdateLevelAndHealth()
     {

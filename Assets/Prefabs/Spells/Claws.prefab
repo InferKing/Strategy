@@ -247,8 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f46f63c9b29174dafa1c3a9e9204d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xp: 20000
   cost: 1500
   team: 1
+  _audioSource: {fileID: 0}
   _parent: {fileID: 3383231089676640770}
   _animator: {fileID: 4022583450771238756}
   _raycastUnit: {fileID: 8396179750362135917}

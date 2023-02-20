@@ -37,44 +37,52 @@ public class ButtonController : MonoBehaviour
     }
     public void GetUnit(int index)
     {
-        if (Singleton.Instance.Player.TryMoneyTransaction(-_model.GetUnits()[index].price))
+        if (!Singleton.Instance.Player.TryMoneyTransaction(-_model.GetUnits()[index].price))
         {
-            _tower.AddToQueue(_model.GetUnitsGO()[index]);
-            TextController.updatePlayerUI?.Invoke();
+            MessageText.sendMessage?.Invoke(Constants.NoMoney);
+            return;
         }
+        _tower.AddToQueue(_model.GetUnitsGO()[index]);
+        TextController.updatePlayerUI?.Invoke();
     }
     public void SetTower(int index)
     {
-        if (Singleton.Instance.Player.TryMoneyTransaction(-_tower.GetTowerPrices()[index]))
+        if (!Singleton.Instance.Player.TryMoneyTransaction(-_tower.GetTowerPrices()[index]))
         {
-            TextController.updatePlayerUI?.Invoke();
-            switch (index)
-            {
-                case 0:
-                    _tower.UpdateCannon(25, 0, 10);
-                    MessageText.sendMessage?.Invoke("~~~UPGRADE!~~~\nCannon damage and radius increased");
-                    break;
-                case 1:
-                    _tower.UpdateCannon(0, 20, 0);
-                    MessageText.sendMessage?.Invoke("~~~UPGRADE!~~~\nCannon attack speed increased");
-                    break;
-                case 2:
-                    _tower.UpdateTower(1, 0);
-                    MessageText.sendMessage?.Invoke("~~~UPGRADE!~~~\nTower repair score increased");
-                    break;
-                case 3:
-                    _tower.UpdateTower(0, 500);
-                    MessageText.sendMessage?.Invoke("~~~UPGRADE!~~~\nTower health increased");
-                    break;
-            }
-            int x = _tower.GetTowerPrices()[index];
-            _tower.GetTowerPrices()[index] += (int)Mathf.Round(x * 0.5f);
-            UpdateButtonDescriptions?.Invoke();
+            MessageText.sendMessage?.Invoke(Constants.NoMoney);
+            return;
         }
+        TextController.updatePlayerUI?.Invoke();
+        switch (index)
+        {
+            case 0:
+                _tower.UpdateCannon(25, 0, 10);
+                MessageText.sendMessage?.Invoke("~~~UPGRADE!~~~\nCannon damage and radius increased");
+                break;
+            case 1:
+                _tower.UpdateCannon(0, 20, 0);
+                MessageText.sendMessage?.Invoke("~~~UPGRADE!~~~\nCannon attack speed increased");
+                break;
+            case 2:
+                _tower.UpdateTower(1, 0);
+                MessageText.sendMessage?.Invoke("~~~UPGRADE!~~~\nTower repair score increased");
+                break;
+            case 3:
+                _tower.UpdateTower(0, 500);
+                MessageText.sendMessage?.Invoke("~~~UPGRADE!~~~\nTower health increased");
+                break;
+        }
+        int x = _tower.GetTowerPrices()[index];
+        _tower.GetTowerPrices()[index] = (int)(Mathf.Round(x * 1.5f) / 100) * 100;
+        UpdateButtonDescriptions?.Invoke();
     }
     public void SetSpell(int index)
     {
-        if (Singleton.Instance.Player.TryMoneyTransaction(-_model.GetSpells()[index].cost))
+        if (!Singleton.Instance.Player.TryMoneyTransaction(-_model.GetSpells()[index].cost))
+        {
+            MessageText.sendMessage?.Invoke(Constants.NoMoney);
+            return;
+        }
         switch (index)
         {
             case 0:
@@ -98,7 +106,11 @@ public class ButtonController : MonoBehaviour
     }
     public void SetUpgrade(ItemDescription item)
     {
-        if (!Singleton.Instance.Player.TryMoneyTransaction(-item.GetPrice())) return;
+        if (!Singleton.Instance.Player.TryMoneyTransaction(-item.GetPrice()))
+        {
+            MessageText.sendMessage?.Invoke(Constants.NoMoney);
+            return;
+        }
         Unit[] units = _model.GetUnits();
         List<float> list = new List<float>();
         UpgradeStats.bonuses.TryGetValue(item.GetUnitType(), out list);

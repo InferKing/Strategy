@@ -17,23 +17,23 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(Vector3.right * Time.deltaTime * speed);
-            OnCameraTranslated?.Invoke(Vector3.right*Time.deltaTime*speed);
+            transform.Translate(Vector3.right * Time.unscaledDeltaTime * speed);
+            OnCameraTranslated?.Invoke(Vector3.right * Time.unscaledDeltaTime * speed);
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            transform.Translate(Vector3.left * Time.deltaTime * speed);
-            OnCameraTranslated?.Invoke(Vector3.left * Time.deltaTime * speed);
+            transform.Translate(Vector3.left * Time.unscaledDeltaTime * speed);
+            OnCameraTranslated?.Invoke(Vector3.left * Time.unscaledDeltaTime * speed);
         }
         if (transform.position.x > rightPosX)
         {
-            OnCameraTranslated?.Invoke(Vector3.left * Time.deltaTime * speed);
+            OnCameraTranslated?.Invoke(Vector3.left * Time.unscaledDeltaTime * speed);
             transform.position = new Vector3(rightPosX, transform.position.y, transform.position.z);
             _arrowController.SetArrows(true, false);
         }
         else if (transform.position.x < leftPosX)
         {
-            OnCameraTranslated?.Invoke(Vector3.right * Time.deltaTime * speed);
+            OnCameraTranslated?.Invoke(Vector3.right * Time.unscaledDeltaTime * speed);
             transform.position = new Vector3(leftPosX, transform.position.y, transform.position.z);
             _arrowController.SetArrows(false, true);
         }

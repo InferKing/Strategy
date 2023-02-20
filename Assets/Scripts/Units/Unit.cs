@@ -116,6 +116,11 @@ public class Unit : MonoBehaviour
             int _damage = Mathf.RoundToInt(UnityEngine.Random.Range((damage * coefAT) * (1 - coefAttack), 
                 (damage * coefAT) * (1 + coefAttack)) * coefAT);
             _enemy.health -= _damage;
+            if (type == UnitType.Hero)
+            {
+                health += Mathf.RoundToInt(_damage * 0.1f);
+                health = Mathf.Clamp(health, 0, maxHealth);
+            }
             _enemy.health = Mathf.Clamp(_enemy.health, 0, _enemy.maxHealth);
             if (_enemy.type == UnitType.Hero)
             {
@@ -179,7 +184,7 @@ public class Unit : MonoBehaviour
     protected void GetEnemy()
     {
         Unit unit = _rayUnit.GetRaycastUnit(isLeft, radius);
-        Tower tower = _rayUnit.GetRaycastTower(isLeft,radius, type);
+        Tower tower = _rayUnit.GetRaycastTower(isLeft, radius, type);
         if (unit == null)
         {
             _enemy = null;
@@ -189,7 +194,7 @@ public class Unit : MonoBehaviour
                 status = UnitStatus.Attack;
                 return;
             }
-            status = UnitStatus.Move; 
+            if (type != UnitType.Hero) status = UnitStatus.Move; 
             return;
         }
         if (unit.team != team && !unit.isDead)
@@ -208,18 +213,19 @@ public class Unit : MonoBehaviour
                 status = unit.status == UnitStatus.Attack ? UnitStatus.Stay : unit.status;
             }
         }
-        else
+        else 
         {
-            status = UnitStatus.Move; 
+            if (type != UnitType.Hero) status = UnitStatus.Move; 
         }
     }
     public int[] GetStats() // 0 is damage, 1 is health
     {
-        int[] stats = new int[2];
+        int[] stats = new int[3];
         List<float> list = new List<float>();
         UpgradeStats.bonuses.TryGetValue(type, out list);
         stats[0] = Mathf.RoundToInt(damage * list[0]);
         stats[1] = Mathf.RoundToInt(maxHealth * list[1]);
+        stats[2] = unlockExp;
         return stats;
     }
     public void SetAnim()
@@ -269,4 +275,5 @@ public class Unit : MonoBehaviour
         }
 
     }
+    protected float GetSpeedX() => _rb.velocity.x;
 }

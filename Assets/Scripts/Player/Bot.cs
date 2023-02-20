@@ -16,17 +16,30 @@ public class Bot : MonoBehaviour
     [SerializeField] private GameObject[] _units;
     [SerializeField] private Model _model;
     private List<int> _timeToSpell;
-    public Difficult difficult { private get; set; }
+    public Difficult difficult { get; private set; }
     private void Start()
     {
-        _timeToSpell = new List<int>() { 35,75};
         difficult = (Difficult)PlayerPrefs.GetInt("Difficult");
-        Debug.Log($"Difficult is {difficult}");
+        switch (difficult)
+        {
+            case Difficult.Easy:
+                _timeToSpell = new List<int>() { 60, 105 };
+                break;
+            case Difficult.Medium:
+                _timeToSpell = new List<int>() { 45, 95 };
+                break;
+            case Difficult.Hard:
+                _timeToSpell = new List<int>() { 30, 75 };
+                break;
+        }
+        _tower.UpdateCannon(Mathf.RoundToInt((DataQueue.cannonCoefs[difficult][0]-1) * 100), Mathf.RoundToInt((DataQueue.cannonCoefs[difficult][1]-1) * 100), 
+            Mathf.RoundToInt((DataQueue.cannonCoefs[difficult][2]-1) * 100));
         StartCoroutine(Life());
         StartCoroutine(UsingSpell());
     }
     private IEnumerator UsingSpell()
     {
+        Dictionary<int, bool> used = new Dictionary<int, bool>() { { 0, false }, { 1, false } };
         List<float> sm = new List<float> { 0, 0 };
         Vector3 vector = Vector3.zero;
         while(_tower.health > 0)
@@ -34,9 +47,14 @@ public class Bot : MonoBehaviour
             for (int i = 0; i < sm.Count; i++)
             {
                 sm[i] += Time.deltaTime;
-                if (sm[i] > _timeToSpell[i])
+                if (used.ContainsValue(false) && !used[i] &&  _model.GetSpells()[i].xp <= Singleton.Instance.Player.GetExp())
                 {
-                    sm[i] -= _timeToSpell[i];
+                    used[i] = true;
+                    sm[i] = 0;
+                }
+                if (sm[i] > _timeToSpell[i] && used[i])
+                {
+                    sm[i] = 0;
                     vector = _stateDeterminer.GetEnemyCrowdPos();
                     if (vector != Vector3.zero)
                     {
