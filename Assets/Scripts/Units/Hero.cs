@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using System;
 public class Hero : Unit
 {
+    public static Action<int> AddXPHero;
+    [SerializeField] private Animator[] _animators;
+    [SerializeField] private ParticleSystem _particleHeal;
     [SerializeField] private HeroStats _stats;
     [SerializeField] private float _healDeltaTime;
     [SerializeField] private int _healAmount;
@@ -14,13 +17,24 @@ public class Hero : Unit
     public int XP { get; private set; }
     public int Level { get; private set; }
     public int MaxXP { get; private set; }
+    private void OnEnable()
+    {
+        AddXPHero += UpdateStats;
+        AnimatorControl.IndexChanged += SetAnimator;
+    }
+    private void OnDisable()
+    {
+        AddXPHero -= UpdateStats;
+        AnimatorControl.IndexChanged -= SetAnimator;
+    }
     private void Start()
     {
-        coefAT = 1f;
         XP = 0;
         Level = 1;
         MaxXP = 500;
+        SetAnimator(AnimatorControl.index);
         type = UnitType.Hero;
+        _stats = FindObjectOfType<HeroStats>();
         _stats.UpdateHeroUI(this);
         StartCoroutine(FixCor());
     }
@@ -35,17 +49,17 @@ public class Hero : Unit
     }
     private IEnumerator GoTo()
     {
-        _enabled = false;
+        _enabled = true;
         Vector2 vect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        status = UnitStatus.Move;
         while (Mathf.Abs(vect.x-transform.position.x) > _eps)
         {
             SetDest(vect.x > _parent.transform.position.x);
+            status = UnitStatus.Move;
             yield return null;
         }
         StopMove();
         status = UnitStatus.Stay;
-        _enabled = true;
+        _enabled = false;
     }
     private IEnumerator UserControl()
     {
@@ -60,29 +74,67 @@ public class Hero : Unit
                 health = Mathf.Clamp(health, 0, maxHealth);
                 healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)health / maxHealth, 0, 1), healthBar.transform.localScale.y, 1);
             }
+            Unit unit = _rayUnit.GetRaycastUnit(isLeft, radius);
+            Tower tower = _rayUnit.GetRaycastTower(isLeft, radius, type);
+            if (unit == null && tower == null && !_enabled)
+            {
+                status = UnitStatus.Stay;
+            }
+            else if (unit != null || tower != null)
+            {
+                if (_cor != null && _enabled) StopCoroutine(_cor);
+                status = UnitStatus.Attack;
+                _enabled = false;
+                _enemy = unit;
+                _tower = tower;
+            }
             if (!EventSystem.current.IsPointerOverGameObject() && Input.GetKeyDown(KeyCode.Mouse0))
             {
                 if (_cor != null) StopCoroutine(_cor);
-                _enabled = false;
                 _cor = StartCoroutine(GoTo());
             }
-            GetEnemy();
-            if (_enabled && status != UnitStatus.Attack) status = UnitStatus.Stay;
+            
             time += Time.deltaTime;
             SetAnim();
             _stats.UpdateHeroUI(this);
             yield return null;
         }
         SetDeath();
-        yield return new WaitForSeconds(1.5f);
-        _stats.CloseHeroUi();
+        StopMove();
+        StopCoroutine(_cor);
+        yield return new WaitForSeconds(2.5f);
+        health = 0;
+        _stats.UpdateHeroUI(this);
         Destroy(_parent);
+    }
+    public void SetAnimator(int index)
+    {
+        _animator = _animators[index];
+        _animators[index].gameObject.SetActive(true);
+        _animators[1 - index].gameObject.SetActive(false);
+        UpdateWeapon(index);
+        GetEnemy();
+        SetAnim();
     }
     public void UpdateStats(int cost)
     {
         XP += Mathf.RoundToInt(cost / 2);
         UpdateLevelAndHealth();
         _stats.UpdateHeroUI(this);
+    }
+    private void UpdateWeapon(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                radius = 1f;
+                coefAT = 1.4f;
+                break;
+            case 1:
+                radius = 4f;
+                coefAT = 0.65f;
+                break;
+        }
     }
     private void SetDest(bool b)
     {
@@ -104,9 +156,39 @@ public class Hero : Unit
             MaxXP += 200 * Level;
             maxHealth = 500 + (Level - 1) * 250;
             health += 250;
-            damage = Mathf.RoundToInt(damage * 1.2f);
+            damage += 10;
             MessageText.sendMessage?.Invoke(Constants.HeroLvlUp);
         }
     }
+    public void StartHeal()
+    {
+        _particleHeal.Play();
+        StartCoroutine(Heal());
+    }
+    public void StartRage()
+    {
+        StartCoroutine(Rage());
+    }
+    private IEnumerator Heal()
+    {
+        float time = 0f, maxTime = 10f;
+        while (time < maxTime)
+        {
+            time += 0.5f;
+            health += Mathf.RoundToInt(maxHealth * 0.01f);
+            _stats.UpdateHeroUI(this);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+    private IEnumerator Rage()
+    {
+        coefAT += 1f;
+        _animator.speed = 1.5f;
+        speed = 3f;
+        yield return new WaitForSeconds(15f);
+        speed = 2f;
+        coefAT -= 1f;
+        _animator.speed = 1f;
 
+    }
 }

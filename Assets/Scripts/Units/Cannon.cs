@@ -35,12 +35,12 @@ public class Cannon : MonoBehaviour
             _unit.health = Mathf.Clamp(_unit.health, 0, _unit.maxHealth);
             _unit.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)_unit.health / _unit.maxHealth, 0, 1), _unit.healthBar.transform.localScale.y, 1);
             TextController.showUnitUI?.Invoke(_unit.gameObject, _damage);
-            _unit.particleSystem.Play();
+            _unit.particleSyst.Play();
             if (_unit.health == 0)
             {
                 if (_unit.team == 1 && !_unit.isDead)
                 {
-                    MainController.currentUnits -= 1;
+                    if (_unit.type != UnitType.Hero) MainController.currentUnits -= 1;
                     TextController.updatePlayerUI?.Invoke();
                 }
                 if (_unit.team != _myTower.team && !_unit.isDead)

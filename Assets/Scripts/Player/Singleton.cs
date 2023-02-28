@@ -18,10 +18,10 @@ public class Singleton : MonoBehaviour
         switch (difficult)
         {
             case Difficult.Easy:
-                Player = new Player(750, 100, 1500);
+                Player = new Player(750, 100, 1000);
                 break;
             case Difficult.Medium:
-                Player = new Player(500, 50, 0);
+                Player = new Player(550, 50, 0);
                 break;
             case Difficult.Hard:
                 Player = new Player(350, 0, 0);

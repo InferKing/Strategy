@@ -52,12 +52,13 @@ public class BlockSprite : MonoBehaviour
             _once = true;
             _button.interactable = true;
             _image.sprite = _sprite;
-            MessageText.sendMessage?.Invoke(Constants.UnitUnlocked);
+            if (_menuType == MenuType.Hero) MessageText.sendMessage?.Invoke(Constants.HeroIsReady);
+            else MessageText.sendMessage?.Invoke(Constants.UnitUnlocked);
         }
     }
     private void TryDelayInteract()
     {
-        if (!_button.interactable && Singleton.Instance.Player.GetExp() >= _exp && _lockType == LockType.Delay && !_enabled)
+        if (!_button.interactable && _lockType == LockType.Delay && !_enabled && Singleton.Instance.Player.GetExp() >= _exp)
         {
             _image.sprite = _sprite;
             StartCoroutine(StartDelay());
@@ -80,7 +81,7 @@ public class BlockSprite : MonoBehaviour
         _slider.gameObject.SetActive(false);
         _button.interactable = true;
         _enabled = false;
-        MessageText.sendMessage?.Invoke(Constants.SpellIsReady);
+        MessageText.sendMessage?.Invoke(_menuType == MenuType.Spell ? Constants.SpellIsReady : Constants.HeroIsReady);
     }
     private void SetUI(MenuType type, bool enabled)
     {

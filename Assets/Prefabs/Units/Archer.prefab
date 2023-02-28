@@ -5618,7 +5618,7 @@ MonoBehaviour:
   _parent: {fileID: 7106450142794868664}
   _isMenu: 0
   isDead: 0
-  particleSystem: {fileID: 6154073181415745891}
+  particleSyst: {fileID: 6154073181415745891}
   healthBar: {fileID: 7106450142988315053}
   status: 1
   type: 1

@@ -6,7 +6,8 @@ using System;
 public enum MenuType
 {
     Spell,
-    Hero
+    Hero,
+    Nothing
 }
 public class ButtonController : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class ButtonController : MonoBehaviour
     [SerializeField] private GameObject[] _menu;
     [SerializeField] private Model _model;
     [SerializeField] private Button[] _spellButtons;
+    [SerializeField] private Button[] _heroButtons;
+    [SerializeField] private Button[] _cannonButtons;
+    [SerializeField] private AudioSource _audioHero;
+    [SerializeField] private AudioClip[] _audioSound; // 0 is guitar, 1 is heal
+    private List<int> _countUpgrade = new List<int>() { 0, 0, 0, 0 };
     private void Start()
     {
         GetMenu(0);
@@ -32,7 +38,20 @@ public class ButtonController : MonoBehaviour
             }
         }
         if (_menu.Length > index) _menu[index].SetActive(!_menu[index].activeSelf);
-        MenuEnabled?.Invoke(index == 2 ? MenuType.Spell : MenuType.Hero,_menu[2].activeSelf);
+        MenuType type;
+        switch (index)
+        {
+            case 2:
+                type = MenuType.Spell;
+                break;
+            case 3:
+                type = MenuType.Hero;
+                break;
+            default:
+                type = MenuType.Nothing;
+                break;
+        }
+        MenuEnabled?.Invoke(type,_menu[index].activeSelf);
         Singleton.Instance.Player.AddExperience(0);
     }
     public void GetUnit(int index)
@@ -47,29 +66,36 @@ public class ButtonController : MonoBehaviour
     }
     public void SetTower(int index)
     {
+        if (_countUpgrade[index] == 5)
+        {
+            _cannonButtons[index].interactable = false;
+            MessageText.sendMessage?.Invoke(Constants.LimitReached);
+            return;
+        }
         if (!Singleton.Instance.Player.TryMoneyTransaction(-_tower.GetTowerPrices()[index]))
         {
             MessageText.sendMessage?.Invoke(Constants.NoMoney);
             return;
         }
         TextController.updatePlayerUI?.Invoke();
+        _countUpgrade[index] += 1;
         switch (index)
         {
             case 0:
                 _tower.UpdateCannon(25, 0, 10);
-                MessageText.sendMessage?.Invoke("~~~UPGRADE!~~~\nCannon damage and radius increased");
+                MessageText.sendMessage?.Invoke(Constants.CannonDamage);
                 break;
             case 1:
                 _tower.UpdateCannon(0, 20, 0);
-                MessageText.sendMessage?.Invoke("~~~UPGRADE!~~~\nCannon attack speed increased");
+                MessageText.sendMessage?.Invoke(Constants.CannonSpeed);
                 break;
             case 2:
                 _tower.UpdateTower(1, 0);
-                MessageText.sendMessage?.Invoke("~~~UPGRADE!~~~\nTower repair score increased");
+                MessageText.sendMessage?.Invoke(Constants.TowerRepair);
                 break;
             case 3:
                 _tower.UpdateTower(0, 500);
-                MessageText.sendMessage?.Invoke("~~~UPGRADE!~~~\nTower health increased");
+                MessageText.sendMessage?.Invoke(Constants.TowerHealth);
                 break;
         }
         int x = _tower.GetTowerPrices()[index];
@@ -123,5 +149,55 @@ public class ButtonController : MonoBehaviour
             list[0] += 0.2f;
         }
         UpdateButtonPrices?.Invoke(item);
+    }
+    public void SetHero(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                if (MainController.hero == null)
+                {
+                    if (Singleton.Instance.Player.TryMoneyTransaction(-_model.GetHero().price))
+                    {
+                        if (_audioHero.isPlaying) _audioHero.Stop();
+                        _audioHero.clip = _audioSound[0];
+                        _audioHero.Play();
+                        GameObject gObj = Instantiate(_model.GetHeroGO());
+                        gObj.transform.position = _tower.GetSpawnerPos();
+                        MainController.hero = gObj.GetComponentInChildren<Hero>();
+                        _heroButtons[index].interactable = false;
+                    }
+                    else MessageText.sendMessage?.Invoke(Constants.NoMoney);
+                }
+                else MessageText.sendMessage?.Invoke(Constants.HeroOnField);
+                break;
+            case 1:
+                if (MainController.hero != null)
+                {
+                    if (_audioHero.isPlaying) _audioHero.Stop();
+                    _audioHero.clip = _audioSound[1];
+                    _audioHero.Play();
+                    MainController.hero.StartHeal();
+                    _heroButtons[index].interactable = false;
+                }
+                else MessageText.sendMessage?.Invoke(Constants.HeroNotOnField);
+                break;
+            case 2:
+                if (MainController.hero != null)
+                {
+                    Debug.Log("work in progress");
+                }
+                else MessageText.sendMessage?.Invoke(Constants.HeroNotOnField);
+                break;
+            case 3:
+                if (MainController.hero != null)
+                {
+                    MainController.hero.StartRage();
+                    _heroButtons[index-1].interactable = false;
+                }
+                else MessageText.sendMessage?.Invoke(Constants.HeroNotOnField);
+                break;
+        }
+        Singleton.Instance.Player.AddExperience(0);
     }
 }

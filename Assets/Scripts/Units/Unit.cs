@@ -21,15 +21,15 @@ public class Unit : MonoBehaviour
 {
     [SerializeField] private BoxCollider2D _boxCollider;
     [SerializeField] private Rigidbody2D _rb;
-    [SerializeField] private Animator _animator;
-    [SerializeField] private RaycastUnit _rayUnit;
+    [SerializeField] protected Animator _animator;
+    [SerializeField] protected RaycastUnit _rayUnit;
     [SerializeField] protected GameObject _parent;
     [SerializeField] private bool _isMenu;
     [HideInInspector] public bool isDead = false;
     protected Unit _enemy;
     protected Tower _tower;
     private float coefAttack = 0.2f;
-    public ParticleSystem particleSystem;
+    public ParticleSystem particleSyst;
     public GameObject healthBar;
     public UnitStatus status;
     public UnitType type;
@@ -114,7 +114,7 @@ public class Unit : MonoBehaviour
         if (_enemy != null && !_enemy.isDead && _enemy.team != team)
         {
             int _damage = Mathf.RoundToInt(UnityEngine.Random.Range((damage * coefAT) * (1 - coefAttack), 
-                (damage * coefAT) * (1 + coefAttack)) * coefAT);
+                (damage * coefAT) * (1 + coefAttack)) * (type != UnitType.Hero ? coefAT : 1));
             _enemy.health -= _damage;
             if (type == UnitType.Hero)
             {
@@ -124,19 +124,22 @@ public class Unit : MonoBehaviour
             _enemy.health = Mathf.Clamp(_enemy.health, 0, _enemy.maxHealth);
             if (_enemy.type == UnitType.Hero)
             {
-                _enemy.GetComponent<Hero>().UpdateStats(0);
+                Hero h = _enemy.GetComponent<Hero>();
+                h.UpdateStats(0);
             }
+            _enemy.particleSyst.Play();
             _enemy.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)_enemy.health / _enemy.maxHealth, 0, 1), _enemy.healthBar.transform.localScale.y, 1);
             TextController.showUnitUI?.Invoke(_enemy.gameObject, _damage);
-            _enemy.particleSystem.Play();
             if (_enemy.health == 0)
             {
                 if (_enemy.team == 2 && !_enemy.isDead)
                 {
+                    NearDeath.OnDeathHappened?.Invoke(_enemy);
                     _enemy.isDead = true;
                     if (type == UnitType.Hero)
                     {
-                        GetComponent<Hero>().UpdateStats(_enemy.price);
+                        Hero h = GetComponent<Hero>();
+                        h.UpdateStats(_enemy.price);
                     }
                     Singleton.Instance.Player.TryMoneyTransaction(_enemy.price);
                     Singleton.Instance.Player.AddExperience(_enemy.price * 2);
@@ -150,8 +153,8 @@ public class Unit : MonoBehaviour
                 }
                 TextController.updatePlayerUI?.Invoke();
                 _enemy.status = UnitStatus.Death;
-                GetEnemy();
                 _enemy = null;
+                GetEnemy();
             }
         }
     }
@@ -194,6 +197,7 @@ public class Unit : MonoBehaviour
                 status = UnitStatus.Attack;
                 return;
             }
+            if (tower == null && type == UnitType.Hero) status = UnitStatus.Stay;
             if (type != UnitType.Hero) status = UnitStatus.Move; 
             return;
         }
@@ -201,6 +205,7 @@ public class Unit : MonoBehaviour
         {
             status = UnitStatus.Attack;
             _enemy = unit;
+            _tower = null;
         }
         else if (unit.type is UnitType.Melee)
         {

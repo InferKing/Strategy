@@ -13,9 +13,20 @@ public static class Constants
     public const string LimitReached = "Limit reached!";
     public const string HeroLvlUp = "New hero level!";
     public const string NoMoney = "Not enough money!";
+    public const string HeroIsReady = "Open Hero menu to see smth!";
+    public const string HeroOnField = "Hero is already on the field!";
+    public const string HeroNotOnField = "Hero is not on the field!";
+    public const string CannonDamage = "~~~UPGRADE!~~~\nCannon damage and radius increased";
+    public const string CannonSpeed = "~~~UPGRADE!~~~\nCannon attack speed increased";
+    public const string TowerHealth = "~~~UPGRADE!~~~\nTower health increased";
+    public const string TowerRepair = "~~~UPGRADE!~~~\nTower repair score increased";
+    public const string CheatMoney = "zoolkmnb";
+    public const string CheatXP = "bzzxxccm";
+    public const string CheatRep = "zxcvvcxz";
     public static List<string> Messages = new List<string>()
     {
-        UnitUnlocked, SpellIsReady, HealthIncreased, AttackIncreased, LimitReached, HeroLvlUp, NoMoney
+        UnitUnlocked, SpellIsReady, HealthIncreased, AttackIncreased, LimitReached, HeroLvlUp, CannonDamage, 
+        CannonSpeed, TowerHealth, TowerRepair, HeroOnField, HeroNotOnField, HeroIsReady
     };
     public static List<string> PauseText = new List<string>()
     {

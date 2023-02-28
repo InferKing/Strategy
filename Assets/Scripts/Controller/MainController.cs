@@ -7,6 +7,7 @@ public class MainController : MonoBehaviour
 {
     public static Action<int, string> ShowFinish;
     public static int currentUnits;
+    public static Hero hero = null;
     [SerializeField] private Tower[] _tower;
     [SerializeField] private Animator _finishUIAnim;
     private void Awake()

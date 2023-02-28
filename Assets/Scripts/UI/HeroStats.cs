@@ -24,8 +24,4 @@ public class HeroStats : MonoBehaviour
         _sliderXP.maxValue = hero.MaxXP;
         _sliderXP.value = hero.XP;
     }
-    public void CloseHeroUi()
-    {
-        _main.SetActive(false);
-    }
 }

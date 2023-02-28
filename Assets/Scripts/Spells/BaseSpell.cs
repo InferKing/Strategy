@@ -23,7 +23,7 @@ public class BaseSpell : MonoBehaviour
             _enemy.healthBar.transform.localScale = new Vector3(Mathf.Clamp((float)_enemy.health / _enemy.maxHealth, 0, 1),
                 _enemy.healthBar.transform.localScale.y, 1);
             TextController.showUnitUI?.Invoke(_enemy.gameObject, _damage);
-            _enemy.particleSystem.Play();
+            _enemy.particleSyst.Play();
             if (_enemy.health == 0)
             {
                 if (_enemy.team == 2 && !_enemy.isDead)
@@ -36,7 +36,7 @@ public class BaseSpell : MonoBehaviour
                 else if (_enemy.team == 1 && !_enemy.isDead)
                 {
                     _enemy.isDead = true;
-                    MainController.currentUnits -= 1;
+                    if (_enemy.type != UnitType.Hero) MainController.currentUnits -= 1;
                     TextController.updatePlayerUI?.Invoke();
                 }
                 TextController.updatePlayerUI?.Invoke();

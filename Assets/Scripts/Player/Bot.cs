@@ -29,11 +29,12 @@ public class Bot : MonoBehaviour
                 _timeToSpell = new List<int>() { 45, 95 };
                 break;
             case Difficult.Hard:
-                _timeToSpell = new List<int>() { 30, 75 };
+                _timeToSpell = new List<int>() { 30, 65 };
                 break;
         }
         _tower.UpdateCannon(Mathf.RoundToInt((DataQueue.cannonCoefs[difficult][0]-1) * 100), Mathf.RoundToInt((DataQueue.cannonCoefs[difficult][1]-1) * 100), 
             Mathf.RoundToInt((DataQueue.cannonCoefs[difficult][2]-1) * 100));
+        _tower.UpdateTower(0, Mathf.RoundToInt(DataQueue.cannonCoefs[difficult][3] - _tower.maxHealth));
         StartCoroutine(Life());
         StartCoroutine(UsingSpell());
     }

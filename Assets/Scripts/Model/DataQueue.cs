@@ -79,25 +79,25 @@ public static class DataQueue
             }
         }
     };
-    // 0 index is damage, 1 is speed, 2 is radius
+    // 0 index is damage, 1 is speed, 2 is radius, 3 is health
     public static readonly Dictionary<Difficult, List<float>> cannonCoefs = new Dictionary<Difficult, List<float>>() 
     {
         {
             Difficult.Easy, new List<float>()
             {
-                1, 1, 1
+                1, 1, 1, 1500
             }
         },
         {
             Difficult.Medium, new List<float>()
             {
-                1.5f, 1, 1.3f
+                1.5f, 1, 1.3f, 2000
             }
         },
         {
             Difficult.Hard, new List<float>()
             {
-                2, 1.5f, 1.5f
+                2.5f, 1.5f, 1.5f, 2500
             }
         }
     };

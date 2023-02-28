@@ -5,6 +5,7 @@ using System;
 
 public class Model : MonoBehaviour
 {
+    [SerializeField] private GameObject _hero;
     [SerializeField] private GameObject[] _unitsGO;
     [SerializeField] private GameObject[] _spellsGO;
     private Unit[] _units;
@@ -35,4 +36,6 @@ public class Model : MonoBehaviour
     {
         units.CopyTo(_units, 0);
     }
+    public Hero GetHero() => _hero.GetComponentInChildren<Hero>();
+    public GameObject GetHeroGO() => _hero;
 }
