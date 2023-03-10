@@ -10,6 +10,9 @@ public class MainController : MonoBehaviour
     public static Hero hero = null;
     [SerializeField] private Tower[] _tower;
     [SerializeField] private Animator _finishUIAnim;
+    [SerializeField] private ButtonController _buttonController;
+    [SerializeField] private Animator _tutorialUI;
+    [SerializeField] private Tutorial _tutorial;
     private void Awake()
     {
         MusicTrans music = FindObjectOfType<MusicTrans>();
@@ -19,8 +22,7 @@ public class MainController : MonoBehaviour
     {
         currentUnits = 0;
         TextController.updatePlayerUI?.Invoke();
-        StartCoroutine(StartAddMoney());
-        StartCoroutine(CheckHealth());
+        StartCoroutine(Tutorial());
     }
     private IEnumerator CheckHealth()
     {
@@ -28,7 +30,6 @@ public class MainController : MonoBehaviour
         {
             yield return null;
         }
-        StopCoroutine(StartAddMoney());
         yield return new WaitForSeconds(3);
         _finishUIAnim.SetBool("Idle", true);
         if (_tower[0].health > 0.01f * _tower[0].maxHealth)
@@ -51,5 +52,15 @@ public class MainController : MonoBehaviour
             Singleton.Instance.Player.CalculateRep();
             TextController.updatePlayerUI?.Invoke();
         }
+    }
+    private IEnumerator Tutorial()
+    {
+        yield return new WaitWhile(() => _buttonController.GetTutorial() == -1);
+        _tutorialUI.SetBool("Idle", true);
+        yield return new WaitForSeconds(1f);
+        if (_buttonController.GetTutorial() == 1) yield return StartCoroutine(_tutorial.StartTutorial());
+        _buttonController.SetTutorial(-2);
+        StartCoroutine(StartAddMoney());
+        StartCoroutine(CheckHealth());
     }
 }

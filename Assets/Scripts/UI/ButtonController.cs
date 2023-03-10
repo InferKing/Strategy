@@ -14,6 +14,7 @@ public class ButtonController : MonoBehaviour
     public static Action UpdateButtonDescriptions;
     public static Action<ItemDescription> UpdateButtonPrices;
     public static Action<MenuType, bool> MenuEnabled;
+    public static Action<int> TutorialMenu;
     [SerializeField] private Tower _tower;
     [SerializeField] private GameObject[] _menu;
     [SerializeField] private Model _model;
@@ -23,12 +24,14 @@ public class ButtonController : MonoBehaviour
     [SerializeField] private AudioSource _audioHero;
     [SerializeField] private AudioClip[] _audioSound; // 0 is guitar, 1 is heal
     private List<int> _countUpgrade = new List<int>() { 0, 0, 0, 0 };
+    private int _tutorial = -1;
     private void Start()
     {
         GetMenu(0);
     }
     public void GetMenu(int index)
     {
+        if (_tutorial == 1 && index != 0 || _tutorial == -1) return;
         for (int i = 0; i < _menu.Length; i++)
         {
             if (i == index) continue;
@@ -38,6 +41,7 @@ public class ButtonController : MonoBehaviour
             }
         }
         if (_menu.Length > index) _menu[index].SetActive(!_menu[index].activeSelf);
+        TutorialMenu?.Invoke(index);
         MenuType type;
         switch (index)
         {
@@ -200,4 +204,9 @@ public class ButtonController : MonoBehaviour
         }
         Singleton.Instance.Player.AddExperience(0);
     }
+    public void SetTutorial(int x)
+    {
+        _tutorial = x;
+    }
+    public int GetTutorial() => _tutorial;
 }

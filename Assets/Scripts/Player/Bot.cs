@@ -11,6 +11,7 @@ public enum BotState
 }
 public class Bot : MonoBehaviour
 {
+    [SerializeField] private ButtonController _buttonController;
     [SerializeField] private Tower _tower;
     [SerializeField] private StateDeterminer _stateDeterminer;
     [SerializeField] private GameObject[] _units;
@@ -83,6 +84,7 @@ public class Bot : MonoBehaviour
 
     private IEnumerator Life()
     {
+        yield return new WaitUntil(() => _buttonController.GetTutorial() == -2);
         int count = 0;
         while (_tower.health > 0)
         {

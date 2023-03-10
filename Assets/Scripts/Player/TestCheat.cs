@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 public class TestCheat : MonoBehaviour
 {
+    [SerializeField] private ButtonController _controller;
     private string _cheatCode = "88888888";
     private void Update()
     {
+        if (_controller.GetTutorial() != -2) return;
         _cheatCode += Input.inputString.ToLower();
         if (_cheatCode.Length > 8)
         {

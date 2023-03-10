@@ -229,9 +229,9 @@ RectTransform:
   m_Father: {fileID: 269892696}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 686.2, y: 490}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -273.8, y: -50}
   m_SizeDelta: {x: 550, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &47863849
@@ -1050,11 +1050,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8177046653664898456, guid: 0cd0d1fde58a01a408ef9b638dd838fa, type: 3}
       propertyPath: m_text
-      value: Exit
+      value: Credits
       objectReference: {fileID: 0}
     - target: {fileID: 8177046653821309918, guid: 0cd0d1fde58a01a408ef9b638dd838fa, type: 3}
       propertyPath: m_text
-      value: Exit
+      value: Credits
       objectReference: {fileID: 0}
     - target: {fileID: 8177046655409273139, guid: 0cd0d1fde58a01a408ef9b638dd838fa, type: 3}
       propertyPath: OutputAudioMixerGroup
@@ -1150,7 +1150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8177046655409273143, guid: 0cd0d1fde58a01a408ef9b638dd838fa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8177046655409273143, guid: 0cd0d1fde58a01a408ef9b638dd838fa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
