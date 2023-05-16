@@ -79,25 +79,23 @@ public class Unit : MonoBehaviour
             if (status is UnitStatus.Stay)
             {
                 StopMove();
-                SetAnim();
             }
             else if (status is UnitStatus.Move)
             {
                 Move(isLeft);
-                SetAnim();
             }
             else if (status is UnitStatus.Attack)
             {
                 if (_enemy != null || _tower != null)
                 {
                     StopMove();
-                    SetAnim();
                     if (_enemy != null || _tower != null)
                     {
                         SetAnim();
                     }
                 }
             }
+            SetAnim();
             yield return new WaitForSeconds(Time.deltaTime);
         }
         SetDeath();
@@ -186,6 +184,7 @@ public class Unit : MonoBehaviour
     }
     protected void GetEnemy()
     {
+        // ебейше тяжелая операция
         Unit unit = _rayUnit.GetRaycastUnit(isLeft, radius);
         Tower tower = _rayUnit.GetRaycastTower(isLeft, radius, type);
         if (unit == null)
