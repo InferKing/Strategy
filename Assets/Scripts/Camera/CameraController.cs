@@ -15,6 +15,7 @@ public class CameraController : MonoBehaviour
     }
     private void Update()
     {
+        if (Time.timeScale < 1) return;
         if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(Vector3.right * Time.unscaledDeltaTime * speed);
