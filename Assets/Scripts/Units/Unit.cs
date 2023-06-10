@@ -57,7 +57,7 @@ public class Unit : MonoBehaviour
         curSpeed = speed;
         if (type is UnitType.Melee)
         {
-            radius = _boxCollider.size.x / 2 + 0.1f;
+            radius = _boxCollider.size.x / 2 + 0.2f;
         }
         status = UnitStatus.Move;
         SetAnim();
@@ -186,6 +186,7 @@ public class Unit : MonoBehaviour
     {
         // ебейше тяжелая операция
         Unit unit = _rayUnit.GetRaycastUnit(isLeft, radius);
+        Debug.Log($"{gameObject.name} - {unit.gameObject.name}");
         Tower tower = _rayUnit.GetRaycastTower(isLeft, radius, type);
         if (unit == null)
         {

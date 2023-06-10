@@ -7,6 +7,7 @@ public class Tutorial : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
     [SerializeField] private Image _arrow;
+    [SerializeField] private RectTransform[] _places;
     [SerializeField] private GameObject _spider;
     private bool _cameraTranslated = false;
     private int _menu = -1;
@@ -29,21 +30,21 @@ public class Tutorial : MonoBehaviour
         yield return StartCoroutine(TypeText("Let's learn how to control the camera. Press A or D to move the camera!", 0f));
         yield return new WaitUntil(() => _cameraTranslated);
         _arrow.gameObject.SetActive(true);
-        _arrow.rectTransform.localPosition = new Vector3(-950, 800, 0);
+        _arrow.rectTransform.position = _places[0].position;
         yield return StartCoroutine(TypeText("All right! Now let's look at this.", 1f));
         yield return StartCoroutine(TypeText("It's your money. You can use it to buy troops, as well as various improvements and spells."));
-        _arrow.rectTransform.localPosition = new Vector3(-950, 670, 0);
+        _arrow.rectTransform.position = _places[1].position;
         yield return StartCoroutine(TypeText("This is your experience. You can get it by killing enemies. It unlocks new troops and spells."));
         yield return StartCoroutine(TypeText("Now let's try to recruit troops.", 1f));
         _arrow.transform.Rotate(0, 0, 90f);
-        _arrow.rectTransform.localPosition = new Vector3(-1423, 40, 0);
+        _arrow.rectTransform.position = _places[2].position;
         yield return StartCoroutine(TypeText("Click on this menu", 0f));
         yield return new WaitUntil(() => _menu == 0);
         _arrow.transform.Rotate(0, 0, -90f);
-        _arrow.rectTransform.localPosition = new Vector3(-1261, 2, 0);
+        _arrow.rectTransform.position = _places[3].position;
         yield return StartCoroutine(TypeText("Now click on a unit", 0f));
         yield return new WaitUntil(() => _menu == -1);
-        _arrow.rectTransform.localPosition = new Vector3(-547, 795, 0);
+        _arrow.rectTransform.position = _places[4].position;
         _arrow.transform.Rotate(0, 0, 180f);
         yield return StartCoroutine(TypeText("Look! This is the unit hiring queue. There can only be a maximum of 15 units on the field, so hire them wisely!", 3f));
         _arrow.gameObject.SetActive(false);
