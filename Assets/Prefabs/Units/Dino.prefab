@@ -5373,9 +5373,9 @@ MonoBehaviour:
   radius: 0.05
   speed: 1.1
   curSpeed: 0
-  health: 900
+  health: 800
   damage: 90
-  maxHealth: 900
+  maxHealth: 800
   price: 1200
   unlockExp: 60000
   team: 1
@@ -5394,5 +5394,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _soundFX: {fileID: 1838141044353856842}
   _soundFXClip:
-  - {fileID: 8300000, guid: c0b1a8f77042e864a8deee657b6e0441, type: 3}
-  - {fileID: 8300000, guid: a0b9fadb898f0ab4a9c847c7855118b3, type: 3}
+  - {fileID: 8300000, guid: c6369c0932b58164f8ffa6828a30a7d3, type: 3}
+  - {fileID: 8300000, guid: 95ea633a7db0c7449969371a065f9a22, type: 3}

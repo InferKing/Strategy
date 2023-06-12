@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030fb2f5981268d47a212acfe0f67e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xp: 3000
-  cost: 500
+  xp: 2500
+  cost: 400
   team: 1
   _audioSource: {fileID: 4081817913207281534}
   _parent: {fileID: 9113237232290225841}

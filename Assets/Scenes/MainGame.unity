@@ -4352,7 +4352,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -66.99997, y: 260.1}
+  m_AnchoredPosition: {x: -80.3, y: 285.1}
   m_SizeDelta: {x: 100, y: 98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &154933145
@@ -11115,7 +11115,7 @@ MonoBehaviour:
   _slider: {fileID: 1619593734}
   _sliderFill: {fileID: 1973394218}
   _lockType: 1
-  _exp: 8000
+  _exp: 7000
   _delay: 50
   _menuType: 0
 --- !u!82 &398144087
@@ -16629,7 +16629,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -66.10007, y: 446.6}
+  m_AnchoredPosition: {x: -80.3, y: 491.40012}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &627829814
@@ -17595,7 +17595,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -13.1, y: 12.7}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 105, y: 210}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &651816001
@@ -30025,7 +30025,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: d346564b35260054abfc756ce9cc2d7c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.84705883}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -31417,7 +31417,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -66.99997, y: 164.7}
+  m_AnchoredPosition: {x: -80.3, y: 179.1}
   m_SizeDelta: {x: 95, y: 98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1009599855
@@ -36720,8 +36720,8 @@ MonoBehaviour:
   _slider: {fileID: 1085974965}
   _sliderFill: {fileID: 1004001272}
   _lockType: 1
-  _exp: 3000
-  _delay: 30
+  _exp: 2500
+  _delay: 25
   _menuType: 0
 --- !u!82 &1161332394
 AudioSource:
@@ -40430,7 +40430,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'The magic fist
 
-    Price: 500'
+    Price: 400'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f6706e4ff5e9cf4d8ebbdd97a56a6e8, type: 2}
   m_sharedMaterial: {fileID: 4227005981324554890, guid: 2f6706e4ff5e9cf4d8ebbdd97a56a6e8, type: 2}
@@ -42736,7 +42736,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -13.1, y: 24.7}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 105, y: 210}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1375381412
@@ -43515,7 +43515,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'XP: 8000'
+  m_text: 'XP: 7000'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f6706e4ff5e9cf4d8ebbdd97a56a6e8, type: 2}
   m_sharedMaterial: {fileID: 4227005981324554890, guid: 2f6706e4ff5e9cf4d8ebbdd97a56a6e8, type: 2}
@@ -43850,7 +43850,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'XP: 20000'
+  m_text: 'XP: 25000'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f6706e4ff5e9cf4d8ebbdd97a56a6e8, type: 2}
   m_sharedMaterial: {fileID: 4227005981324554890, guid: 2f6706e4ff5e9cf4d8ebbdd97a56a6e8, type: 2}
@@ -45668,7 +45668,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.29999924, y: 0}
+  m_AnchoredPosition: {x: -0.29502106, y: 0}
   m_SizeDelta: {x: 0.59, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1500451237
@@ -46197,7 +46197,7 @@ MonoBehaviour:
   _slider: {fileID: 96455907}
   _sliderFill: {fileID: 1774694327}
   _lockType: 1
-  _exp: 20000
+  _exp: 25000
   _delay: 75
   _menuType: 0
 --- !u!82 &1506725003
@@ -51866,7 +51866,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'The subjugation
 
-    Price: 2500'
+    Price: 2000'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f6706e4ff5e9cf4d8ebbdd97a56a6e8, type: 2}
   m_sharedMaterial: {fileID: 4227005981324554890, guid: 2f6706e4ff5e9cf4d8ebbdd97a56a6e8, type: 2}
@@ -54948,7 +54948,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'XP: 3000'
+  m_text: 'XP: 2500'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f6706e4ff5e9cf4d8ebbdd97a56a6e8, type: 2}
   m_sharedMaterial: {fileID: 4227005981324554890, guid: 2f6706e4ff5e9cf4d8ebbdd97a56a6e8, type: 2}
@@ -56225,7 +56225,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -14, y: 44}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 105, y: 210}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1907712919
@@ -58159,7 +58159,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Claws
 
-    Price: 1500'
+    Price: 1100'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f6706e4ff5e9cf4d8ebbdd97a56a6e8, type: 2}
   m_sharedMaterial: {fileID: 4227005981324554890, guid: 2f6706e4ff5e9cf4d8ebbdd97a56a6e8, type: 2}

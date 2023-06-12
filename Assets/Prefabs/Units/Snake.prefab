@@ -5412,7 +5412,7 @@ MonoBehaviour:
   health: 240
   damage: 50
   maxHealth: 240
-  price: 750
+  price: 550
   unlockExp: 20000
   team: 1
   isLeft: 0
@@ -5430,5 +5430,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _soundFX: {fileID: 9055004584560455842}
   _soundFXClip:
-  - {fileID: 8300000, guid: c0b1a8f77042e864a8deee657b6e0441, type: 3}
-  - {fileID: 8300000, guid: a0b9fadb898f0ab4a9c847c7855118b3, type: 3}
+  - {fileID: 8300000, guid: 1579afd52c6cf3e41b33b0b8803e9d75, type: 3}
+  - {fileID: 8300000, guid: 23f51c5edbbb3e94ca17cbe8a48f5cd3, type: 3}

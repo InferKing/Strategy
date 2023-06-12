@@ -4818,7 +4818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f921a475d739aa49aa44e91f3a7c2f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xp: 8000
+  xp: 7000
   cost: 500
   team: 1
   _audioSource: {fileID: 0}

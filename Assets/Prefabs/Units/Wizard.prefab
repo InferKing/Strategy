@@ -5102,7 +5102,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8469329560067958431, guid: 4f924aaa2c72aa245b19ef1a14cdfa61, type: 3}
       propertyPath: m_SortingOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8469329560067958431, guid: 4f924aaa2c72aa245b19ef1a14cdfa61, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -5356,7 +5356,7 @@ MonoBehaviour:
   health: 110
   damage: 24
   maxHealth: 110
-  price: 950
+  price: 750
   unlockExp: 35000
   team: 1
   isLeft: 0
@@ -5374,5 +5374,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _soundFX: {fileID: 8895144185239197209}
   _soundFXClip:
-  - {fileID: 8300000, guid: ab9e16e15f6345a4a97356fc6cf4a48f, type: 3}
-  - {fileID: 8300000, guid: 00cbd6a55dd4c70449273b42b47478a3, type: 3}
+  - {fileID: 8300000, guid: 999734e2dc0a63449b582c6cee62d05e, type: 3}
+  - {fileID: 8300000, guid: 7209a6ab061468a48adfdbebced2525c, type: 3}

@@ -111,8 +111,8 @@ public class Unit : MonoBehaviour
     {
         if (_enemy != null && !_enemy.isDead && _enemy.team != team)
         {
-            int _damage = Mathf.RoundToInt(UnityEngine.Random.Range((damage * coefAT) * (1 - coefAttack), 
-                (damage * coefAT) * (1 + coefAttack)) * (type != UnitType.Hero ? coefAT : 1));
+            int _damage = Mathf.RoundToInt(UnityEngine.Random.Range(damage * coefAT * (1 - coefAttack), 
+                damage * coefAT * (1 + coefAttack)));
             _enemy.health -= _damage;
             if (type == UnitType.Hero)
             {
