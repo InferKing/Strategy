@@ -186,7 +186,7 @@ public class Unit : MonoBehaviour
     {
         // ебейше тяжелая операция
         Unit unit = _rayUnit.GetRaycastUnit(isLeft, radius);
-        Debug.Log($"{gameObject.name} - {unit.gameObject.name}");
+        if (unit != null) Debug.Log($"{gameObject.name} - {unit.gameObject.name}");
         Tower tower = _rayUnit.GetRaycastTower(isLeft, radius, type);
         if (unit == null)
         {

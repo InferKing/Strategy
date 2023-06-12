@@ -16,12 +16,12 @@ public class PressedAnimation : MonoBehaviour
         _audio.Play();
         for (float i = 1; i >= _limit; i -= 0.04f)
         {
-            transform.localScale = new Vector3(Mathf.Clamp(i, _limit, 1), Mathf.Clamp(i, _limit, 1), transform.localScale.z);
+            transform.localScale = new Vector3(Mathf.Clamp(i, _limit, 1), Mathf.Clamp(i, _limit, 1), transform.lossyScale.z);
             yield return null;
         }
         for (float i = _limit; i <= 1; i += 0.04f)
         {
-            transform.localScale = new Vector3(Mathf.Clamp(i, _limit, 1), Mathf.Clamp(i, _limit, 1), transform.localScale.z);
+            transform.localScale = new Vector3(Mathf.Clamp(i, _limit, 1), Mathf.Clamp(i, _limit, 1), transform.lossyScale.z);
             yield return null;
         }
     }

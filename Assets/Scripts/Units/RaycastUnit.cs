@@ -7,7 +7,7 @@ public class RaycastUnit : MonoBehaviour
     [SerializeField] private int[] layersToIgnore;
     [SerializeField] private int curLayer;
     private int layerMask;
-    private float eps = 0.05f;
+    private float eps = 0.1f;
     void Start()
     {
         layerMask = TotalMask(layersToIgnore);

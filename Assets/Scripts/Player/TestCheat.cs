@@ -15,13 +15,13 @@ public class TestCheat : MonoBehaviour
             switch (_cheatCode)
             {
                 case Constants.CheatMoney:
-                    Singleton.Instance.Player.TryMoneyTransaction(5000);
+                    Singleton.Instance.Player.TryMoneyTransaction(50000);
                     break;
                 case Constants.CheatRep:
                     Singleton.Instance.Player.AddReputation(200);
                     break;
                 case Constants.CheatXP:
-                    Singleton.Instance.Player.AddExperience(5000);
+                    Singleton.Instance.Player.AddExperience(50000);
                     break;
             }
             TextController.updatePlayerUI?.Invoke();

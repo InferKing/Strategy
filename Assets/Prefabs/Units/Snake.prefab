@@ -124,7 +124,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.29189}
+  m_Offset: {x: 0, y: 1.3210218}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -135,7 +135,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.7454133, y: 2.9667137}
+  m_Size: {x: 2.7454133, y: 2.9084501}
   m_EdgeRadius: 0
 --- !u!114 &6057124239644559674
 MonoBehaviour:
@@ -5149,6 +5149,10 @@ PrefabInstance:
       value: 1.8499534
       objectReference: {fileID: 0}
     - target: {fileID: -4599898356344800027, guid: 0f7b551fe52a02847be29472133c7c19, type: 3}
+      propertyPath: m_SortingOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4599898356344800027, guid: 0f7b551fe52a02847be29472133c7c19, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
@@ -5229,9 +5233,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1613535081951813241, guid: 0f7b551fe52a02847be29472133c7c19, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613535081951813241, guid: 0f7b551fe52a02847be29472133c7c19, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+    - target: {fileID: 2159582999002622367, guid: 0f7b551fe52a02847be29472133c7c19, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2159582999002622367, guid: 0f7b551fe52a02847be29472133c7c19, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -5276,7 +5288,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.85194564
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -5395,12 +5407,12 @@ MonoBehaviour:
   status: 1
   type: 0
   radius: 0.05
-  speed: 1.7
+  speed: 1.6
   curSpeed: 0
-  health: 280
-  damage: 55
-  maxHealth: 280
-  price: 700
+  health: 240
+  damage: 50
+  maxHealth: 240
+  price: 750
   unlockExp: 20000
   team: 1
   isLeft: 0
