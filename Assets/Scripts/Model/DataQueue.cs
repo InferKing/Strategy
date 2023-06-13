@@ -86,7 +86,6 @@ public static class DataQueue
                 new Dictionary<int, int>() { {3, 3}, {2, 3}, {1, 3} },
                 new Dictionary<int, int>() { {3, 3}, {2, 3}, {1, 3} },
                 new Dictionary<int, int>() { {3, 5}, {1, 3} },
-                new Dictionary<int, int>() { {3, 5}, {1, 3} },
                 new Dictionary<int, int>() { {2, 3}, {1, 3}, {3, 3} },
                 new Dictionary<int, int>() { {4, 3} },
                 new Dictionary<int, int>() { {4, 3} },
@@ -123,7 +122,6 @@ public static class DataQueue
                 new Dictionary<int, int>() { {2, 7}, {1, 5} },
                 new Dictionary<int, int>() { {2, 7}, {1, 5} },
                 new Dictionary<int, int>() { {3, 5} },
-                new Dictionary<int, int>() { {3, 5} },
                 new Dictionary<int, int>() { {3, 5}, {1, 5} },
                 new Dictionary<int, int>() { {3, 5}, {1, 5} },
                 new Dictionary<int, int>() { {2, 3}, {1, 3}, {3, 3} },
@@ -158,7 +156,7 @@ public static class DataQueue
         {
             Difficult.Medium, new List<float>()
             {
-                1.5f, 1.2f, 1.3f, 2500
+                2f, 1.3f, 1.4f, 2500
             }
         },
         {
@@ -180,7 +178,7 @@ public static class DataQueue
         {
             Difficult.Medium, new List<float>()
             {
-                1, 1, 1, 1
+                1.1f, 1.1f, 1, 1
             }
         },
         {

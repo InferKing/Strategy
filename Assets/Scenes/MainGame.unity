@@ -7444,7 +7444,7 @@ MonoBehaviour:
   _slider: {fileID: 0}
   _sliderFill: {fileID: 0}
   _lockType: 0
-  _exp: 25000
+  _exp: 30000
   _delay: 0
   _menuType: 0
 --- !u!114 &228805077
@@ -16403,7 +16403,7 @@ MonoBehaviour:
   _slider: {fileID: 0}
   _sliderFill: {fileID: 0}
   _lockType: 0
-  _exp: 35000
+  _exp: 45000
   _delay: 0
   _menuType: 0
 --- !u!114 &623862478
@@ -50649,7 +50649,7 @@ MonoBehaviour:
   _slider: {fileID: 0}
   _sliderFill: {fileID: 0}
   _lockType: 0
-  _exp: 55000
+  _exp: 65000
   _delay: 0
   _menuType: 0
 --- !u!114 &1697200925

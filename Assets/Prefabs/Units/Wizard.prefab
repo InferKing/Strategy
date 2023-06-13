@@ -5357,7 +5357,7 @@ MonoBehaviour:
   damage: 24
   maxHealth: 110
   price: 750
-  unlockExp: 35000
+  unlockExp: 45000
   team: 1
   isLeft: 0
 --- !u!114 &8895144185239197211
