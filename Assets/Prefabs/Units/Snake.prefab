@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ad267788b807f4f9c6bcf9690b46c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layersToIgnore: 08000000
+  layersToIgnore: 080000000b000000
   curLayer: 7
 --- !u!198 &7622001611871832731
 ParticleSystem:

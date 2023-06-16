@@ -57,7 +57,7 @@ public class Unit : MonoBehaviour
         curSpeed = speed;
         if (type is UnitType.Melee)
         {
-            radius = _boxCollider.size.x / 2 + 0.2f;
+            radius = _boxCollider.size.x / 2 + _boxCollider.offset.x + 0.05f;
         }
         status = UnitStatus.Move;
         SetAnim();

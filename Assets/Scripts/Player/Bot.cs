@@ -38,7 +38,7 @@ public class Bot : MonoBehaviour
             Mathf.RoundToInt((DataQueue.cannonCoefs[difficult][1]-1) * 100), 
             Mathf.RoundToInt((DataQueue.cannonCoefs[difficult][2]-1) * 100)
             );
-        _tower.UpdateTower(0, Mathf.RoundToInt(DataQueue.cannonCoefs[difficult][3] - _tower.maxHealth));
+        _tower.UpdateTower((int)DataQueue.cannonCoefs[difficult][4], Mathf.RoundToInt(DataQueue.cannonCoefs[difficult][3] - _tower.maxHealth));
         UpgradeStats.bonusesEnemy[UnitType.Melee] = new List<float>() 
         { 
             DataQueue.unitsCoefs[difficult][1], 

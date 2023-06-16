@@ -8,6 +8,7 @@ public class Cannon : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private RaycastUnit _raycastUnit;
+    [SerializeField] private ParticleSystem _particleSystem;
     private Unit _unit = null;
     private void Update()
     {
@@ -30,6 +31,7 @@ public class Cannon : MonoBehaviour
         if (_unit != null && !_unit.isDead)
         {
             _audioSource.Play();
+            _particleSystem.Play();
             int _damage = (int)Random.Range(_myTower.GetTurretDamage() * 0.8f, _myTower.GetTurretDamage() * 1.2f);
             _unit.health -= _damage;
             _unit.health = Mathf.Clamp(_unit.health, 0, _unit.maxHealth);

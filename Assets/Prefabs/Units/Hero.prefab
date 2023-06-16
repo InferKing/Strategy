@@ -398,7 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ad267788b807f4f9c6bcf9690b46c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layersToIgnore: 0800000007000000
+  layersToIgnore: 08000000070000000b000000
   curLayer: 8
 --- !u!1 &3804592414644583445
 GameObject:

@@ -11,6 +11,7 @@ public class Hero : Unit
     [SerializeField] private HeroStats _stats;
     [SerializeField] private float _healDeltaTime;
     [SerializeField] private int _healAmount;
+    private bool _inRage = false;
     private float _eps = 0.05f;
     private Coroutine _cor;
     private bool _enabled = false;
@@ -112,6 +113,8 @@ public class Hero : Unit
         _animator = _animators[index];
         _animators[index].gameObject.SetActive(true);
         _animators[1 - index].gameObject.SetActive(false);
+        if (_inRage) _animator.speed = 1.5f;
+        else _animator.speed = 1f;
         UpdateWeapon(index);
         GetEnemy();
         SetAnim();
@@ -127,12 +130,14 @@ public class Hero : Unit
         switch (index)
         {
             case 0:
-                radius = 1f;
-                coefAT = 1.4f;
+                radius = 1.1f;
+                if (_inRage) coefAT = 2.4f;
+                else coefAT = 1.4f;
                 break;
             case 1:
                 radius = 4f;
-                coefAT = 0.65f;
+                if (_inRage) coefAT = 1.65f;
+                else coefAT = 0.65f;
                 break;
         }
     }
@@ -182,6 +187,7 @@ public class Hero : Unit
     }
     private IEnumerator Rage()
     {
+        _inRage = true;
         coefAT += 1f;
         _animator.speed = 1.5f;
         speed = 3f;
@@ -189,6 +195,6 @@ public class Hero : Unit
         speed = 2f;
         coefAT -= 1f;
         _animator.speed = 1f;
-
+        _inRage = false;
     }
 }

@@ -63,8 +63,7 @@ public class Tower : MonoBehaviour
     {
         if (MainController.currentUnits - units.Count < limitUnit && CheckSpawnPos())
         {
-            GameObject unit = null;
-            unit = Instantiate(units[0]);
+            GameObject unit = Instantiate(units[0]);
             unit.transform.position = GetSpawnerPos();
             unit.SetActive(true);
             RemoveUnit();
@@ -82,7 +81,7 @@ public class Tower : MonoBehaviour
     {
         if (units[0].GetComponentInChildren<Unit>().type is UnitType.Area) return true;
         RaycastHit2D[] hits = Physics2D.RaycastAll(_spawner.transform.position, 
-            team == 1 ? Vector2.right : Vector2.left, units[0].GetComponent<BoxCollider2D>().size.x/2);
+            team == 1 ? Vector2.right : Vector2.left, units[0].GetComponent<BoxCollider2D>().size.x/2+0.05f);
         foreach(var hit in hits)
         {
             Unit unit = hit.collider.gameObject.GetComponentInChildren<Unit>();
