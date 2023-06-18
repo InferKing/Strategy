@@ -5482,5 +5482,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _soundFX: {fileID: 6082491720013295374}
   _soundFXClip:
-  - {fileID: 8300000, guid: c6369c0932b58164f8ffa6828a30a7d3, type: 3}
-  - {fileID: 8300000, guid: 95ea633a7db0c7449969371a065f9a22, type: 3}
+  - {fileID: 8300000, guid: 0242948942f787348b2a818ea001a36c, type: 3}
+  - {fileID: 8300000, guid: ae886653a5169a94aae761bd818e004b, type: 3}

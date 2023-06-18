@@ -62,8 +62,8 @@ public static class DataQueue
                 new Dictionary<int, int>() { {6, 3}, {4, 3}, {5, 2} },
                 new Dictionary<int, int>() { {7, 3}},
                 new Dictionary<int, int>() { {7, 3}, {6, 3} },
-                new Dictionary<int, int>() { {7, 5}, {6, 2} },
-                new Dictionary<int, int>() { {7, 5}, {5, 3} }
+                new Dictionary<int, int>() { {7, 3}, {6, 2} },
+                new Dictionary<int, int>() { {7, 4}, {5, 3} }
             }
         },
         {
@@ -137,11 +137,8 @@ public static class DataQueue
                 new Dictionary<int, int>() { {4, 3}, {5, 2} },
                 new Dictionary<int, int>() { {4, 5}, {5, 4} },
                 new Dictionary<int, int>() { {6, 3} },
-                new Dictionary<int, int>() { {6, 5}, {4, 3} },
-                new Dictionary<int, int>() { {6, 5}, {4, 3} },
-                new Dictionary<int, int>() { {6, 3}, {4, 3}, {5, 3} },
-                new Dictionary<int, int>() { {6, 3}, {4, 4}, {5, 1} },
-                new Dictionary<int, int>() { {6, 5}, {4, 5} },
+                new Dictionary<int, int>() { {6, 4}, {5, 3} },
+                new Dictionary<int, int>() { {6, 3}, {4, 4}, {5, 3} },
                 new Dictionary<int, int>() { {7, 3}},
                 new Dictionary<int, int>() { {7, 5}, {6, 2}, {5, 2} },
                 new Dictionary<int, int>() { {7, 5}, {5, 5} }
@@ -160,13 +157,13 @@ public static class DataQueue
         {
             Difficult.Medium, new List<float>()
             {
-                2f, 1.3f, 1.4f, 2500, 2
+                2f, 1.3f, 1.4f, 2500, 5
             }
         },
         {
             Difficult.Hard, new List<float>()
             {
-                2.5f, 1.8f, 1.6f, 4000, 5
+                2.5f, 1.8f, 1.6f, 4000, 14
             }
         }
     };
@@ -188,7 +185,7 @@ public static class DataQueue
         {
             Difficult.Hard, new List<float>()
             {
-                1.2f, 1.1f, 1.2f, 1.1f  
+                1.2f, 1.2f, 1.2f, 1.1f  
             }
         }
     };
