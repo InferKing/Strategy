@@ -14,13 +14,13 @@ public class TestCheat : MonoBehaviour
             _cheatCode = _cheatCode.Substring(1, 8);
             switch (_cheatCode)
             {
-                case Constants.CheatMoney:
+                case "zoolkmnb":
                     Singleton.Instance.Player.TryMoneyTransaction(50000);
                     break;
-                case Constants.CheatRep:
+                case "zxcvvcxz":
                     Singleton.Instance.Player.AddReputation(200);
                     break;
-                case Constants.CheatXP:
+                case "bzzxxccm":
                     Singleton.Instance.Player.AddExperience(50000);
                     break;
             }

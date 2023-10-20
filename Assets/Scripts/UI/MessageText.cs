@@ -6,23 +6,23 @@ using System;
 public static class Constants
 {
     public static string pathSettings = Application.persistentDataPath + "/settings.json";
-    public const string UnitUnlocked = "New unit unlocked!";
-    public const string SpellIsReady = "Spell is ready for use!";
-    public const string HealthIncreased = "Health increased!";
-    public const string AttackIncreased = "Attack damage increased!";
-    public const string LimitReached = "Limit reached!";
-    public const string HeroLvlUp = "New hero level!";
-    public const string NoMoney = "Not enough money!";
-    public const string HeroIsReady = "Open Hero menu to see smth!";
-    public const string HeroOnField = "Hero is already on the field!";
-    public const string HeroNotOnField = "Hero is not on the field!";
-    public const string CannonDamage = "~~~UPGRADE!~~~\nCannon damage and radius increased";
-    public const string CannonSpeed = "~~~UPGRADE!~~~\nCannon attack speed increased";
-    public const string TowerHealth = "~~~UPGRADE!~~~\nTower health increased";
-    public const string TowerRepair = "~~~UPGRADE!~~~\nTower repair score increased";
-    public const string CheatMoney = "zoolkmnb";
-    public const string CheatXP = "bzzxxccm";
-    public const string CheatRep = "zxcvvcxz";
+    public static string UnitUnlocked = "New unit unlocked!";
+    public static string SpellIsReady = "Spell is ready for use!";
+    public static string HealthIncreased = "Health increased!";
+    public static string AttackIncreased = "Attack damage increased!";
+    public static string LimitReached = "Limit reached!";
+    public static string HeroLvlUp = "New hero level!";
+    public static string NoMoney = "Not enough money!";
+    public static string HeroIsReady = "Open Hero menu to see smth!";
+    public static string HeroOnField = "Hero is already on the field!";
+    public static string HeroNotOnField = "Hero is not on the field!";
+    public static string CannonDamage = "~~~UPGRADE!~~~\nCannon damage and radius increased";
+    public static string CannonSpeed = "~~~UPGRADE!~~~\nCannon attack speed increased";
+    public static string TowerHealth = "~~~UPGRADE!~~~\nTower health increased";
+    public static string TowerRepair = "~~~UPGRADE!~~~\nTower repair score increased";
+    public static string CheatMoney = "zoolkmnb";
+    public static string CheatXP = "bzzxxccm";
+    public static string CheatRep = "zxcvvcxz";
     public static List<string> Messages = new List<string>()
     {
         UnitUnlocked, SpellIsReady, HealthIncreased, AttackIncreased, LimitReached, HeroLvlUp, CannonDamage, 
